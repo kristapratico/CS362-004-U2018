@@ -1,1 +1,1 @@
-Krista Pratico  praticok
+This is my assignment-1 submission!
