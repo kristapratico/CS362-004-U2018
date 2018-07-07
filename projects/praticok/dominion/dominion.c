@@ -742,9 +742,10 @@ int getCost(int cardNumber)
 // Refactor: 5 cards moved from cardEffect to their own functions
 // Cards chosen: Adventurer, Smithy, Village, Minion, Tribute
 
-void adventurerCard(int drawntreasure, struct gameState *state, int currentPlayer, int z, int temphand[]) {
+void adventurerCard(int drawntreasure, int handPos, struct gameState *state, int currentPlayer, int z, int temphand[]) {
     int cardDrawn;
-    while (drawntreasure < 2)
+    // bug: the player will only be able to draw 1 treasure card (instead of two) and add it to their hand
+    while (drawntreasure < 1)
     {
       if (state->deckCount[currentPlayer] < 1)
       { //if the deck is empty we need to shuffle discard and add to deck
@@ -770,7 +771,8 @@ void adventurerCard(int drawntreasure, struct gameState *state, int currentPlaye
 
 void smithyCard(int handPos, struct gameState *state, int currentPlayer) {
     //+3 Cards
-    for (int i = 0; i < 3; i++)
+    // bug: allows the player to draw 4 cards and add them to their hand (instead of +3 cards)
+    for (int i = 0; i < 4; i++)
     {
       drawCard(currentPlayer, state);
     }
@@ -824,7 +826,8 @@ void minionCard(int handPos, struct gameState *state, int currentPlayer, int cho
           if (state->handCount[i] > 4)
           {
             //discard hand
-            while (state->handCount[i] > 0)
+            // bug: the other player(s) will discard their hand, but the bug will allow them to keep 1 card
+            while (state->handCount[i] > 1)
             {
               discardCard(handPos, i, state, 0);
             }
@@ -841,7 +844,7 @@ void minionCard(int handPos, struct gameState *state, int currentPlayer, int cho
 }
 
 
-void tributeCard(struct gameState *state, int currentPlayer, int nextPlayer, int tributeRevealedCards[]) {
+void tributeCard(struct gameState *state, int handPos, int currentPlayer, int nextPlayer, int tributeRevealedCards[]) {
     if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
     {
       if (state->deckCount[nextPlayer] > 0)
@@ -893,14 +896,15 @@ void tributeCard(struct gameState *state, int currentPlayer, int nextPlayer, int
       tributeRevealedCards[1] = -1;
     }
 
+    // bug: OR has been changed to AND in the if/else if conditionals so that the else branch always executes
     for (int i = 0; i <= 2; i++)
     {
-      if (tributeRevealedCards[i] == copper || tributeRevealedCards[i] == silver || tributeRevealedCards[i] == gold)
+      if (tributeRevealedCards[i] == copper && tributeRevealedCards[i] == silver && tributeRevealedCards[i] == gold)
       { //Treasure cards
         state->coins += 2;
       }
 
-      else if (tributeRevealedCards[i] == estate || tributeRevealedCards[i] == duchy || tributeRevealedCards[i] == province || tributeRevealedCards[i] == gardens || tributeRevealedCards[i] == great_hall)
+      else if (tributeRevealedCards[i] == estate && tributeRevealedCards[i] == duchy && tributeRevealedCards[i] == province && tributeRevealedCards[i] == gardens && tributeRevealedCards[i] == great_hall)
       { //Victory Card Found
         drawCard(currentPlayer, state);
         drawCard(currentPlayer, state);
@@ -936,7 +940,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch (card)
   {
   case adventurer:
-    adventurerCard(drawntreasure, state, currentPlayer, z, temphand);
+    adventurerCard(drawntreasure, handPos, state, currentPlayer, z, temphand);
     return 0;
 
   case council_room:
@@ -1197,7 +1201,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     return 0;
 
   case tribute:
-    tributeCard(state, currentPlayer, nextPlayer, tributeRevealedCards);
+    tributeCard(state, handPos, currentPlayer, nextPlayer, tributeRevealedCards);
     return 0;
 
   case ambassador:
