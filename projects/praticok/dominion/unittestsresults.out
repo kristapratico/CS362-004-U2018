@@ -126,15 +126,18 @@ Player0 gains +1 action: PASSED
 TEST 9: Check if player0 now has 4 cards in hand
 player0 has 4 cards in hand: PASSED
 
-TEST 10: Check if player1 now has 4 cards in hand from the attack
+TEST 3: Player0 gains 4 cards from his own pile
+Player0 drew 4 cards from his own pile: PASSED
+
+TEST 11: Check if player1 now has 4 cards in hand from the attack
 player1 has 4 cards in hand: FAILED
 
-TEST 11: No state change occurs to victory card piles
+TEST 12: No state change occurs to victory card piles
 Estate pile unchanged: PASSED
 Duchy pile unchanged: PASSED
 Province pile unchanged: PASSED
 
-TEST 12: No state change occurs to kingdom card piles
+TEST 13: No state change occurs to kingdom card piles
 Card 0: PASSED
 Card 1: PASSED
 Card 2: PASSED
@@ -148,9 +151,52 @@ Card 9: PASSED
 
 ----End Tests for minion----
 
-Number of Tests Ran: 12
+Number of Tests Ran: 13
 Number of Tests Failed: 1
 File 'dominion.c'
 Lines executed:22.05% of 585
+Creating 'dominion.c.gcov'
+
+cardtest4.c:
+----------------- Testing Card: village ----------------
+TEST 1: Player0 plays village and receives exactly 1 card
+Player0 gains 1 card: PASSED
+
+TEST 2: Check if village card was recorded as played
+village card was recorded as played: PASSED
+
+TEST 3: Player0 gained 1 card from his own pile
+Player0 drew 1 card from his own pile: PASSED
+
+TEST 4: Player0 gains +2 actions
+Player0 gains +2 actions: PASSED
+
+TEST 5: No state change occurs for player1
+Player1 hand count was not changed: PASSED
+Player1 deck count was not changed: PASSED
+
+TEST 6: No state change occurs to victory card piles
+Estate pile unchanged: PASSED
+Duchy pile unchanged: PASSED
+Province pile unchanged: PASSED
+
+TEST 7: No state change occurs to kingdom card piles
+Card 0: PASSED
+Card 1: PASSED
+Card 2: PASSED
+Card 3: PASSED
+Card 4: PASSED
+Card 5: PASSED
+Card 6: PASSED
+Card 7: PASSED
+Card 8: PASSED
+Card 9: PASSED
+
+----End Tests for village----
+
+Number of Tests Ran: 7
+All tests for village PASSED
+File 'dominion.c'
+Lines executed:20.00% of 585
 Creating 'dominion.c.gcov'
 

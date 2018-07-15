@@ -126,15 +126,21 @@ int main () {
     printf("player0 has 4 cards in hand: ");
     assertTF(state2.handCount[player0], beginningState.handCount[player0] - 1);
 
-    // TEST 10: Player1 now has 4 cards in hand from the attack
+    // TEST 10: Player0 received 4 cards from his own pile
     numTests++;
-    printf("\nTEST 10: Check if player1 now has 4 cards in hand from the attack\n");
+    printf("\nTEST 3: Player0 gains 4 cards from his own pile\n");
+    printf("Player0 drew 4 cards from his own pile: ");
+    assertTF(state2.deckCount[player0], beginningState.deckCount[player0] - 4);
+
+    // TEST 11: Player1 now has 4 cards in hand from the attack
+    numTests++;
+    printf("\nTEST 11: Check if player1 now has 4 cards in hand from the attack\n");
     printf("player1 has 4 cards in hand: ");
     assertTF(state2.handCount[player1], 4);
 
-    // TEST 11: No state change occurs to the victory card piles
+    // TEST 12: No state change occurs to the victory card piles
     numTests++;
-    printf("\nTEST 11: No state change occurs to victory card piles\n");
+    printf("\nTEST 12: No state change occurs to victory card piles\n");
     printf("Estate pile unchanged: ");
     assertTF(state2.supplyCount[estate], beginningState.supplyCount[estate]);
     printf("Duchy pile unchanged: ");
@@ -142,9 +148,9 @@ int main () {
     printf("Province pile unchanged: ");
     assertTF(state2.supplyCount[province], beginningState.supplyCount[province]);
 
-    // TEST 12: No state change occurs to the kingdom card piles
+    // TEST 13: No state change occurs to the kingdom card piles
     numTests++;
-    printf("\nTEST 12: No state change occurs to kingdom card piles\n");
+    printf("\nTEST 13: No state change occurs to kingdom card piles\n");
     for (int x = 0; x < 10; x++) {
         printf("Card %d: ", x);
         assertTF(state2.supplyCount[k[x]], beginningState.supplyCount[k[x]]);
