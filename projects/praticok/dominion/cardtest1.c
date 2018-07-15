@@ -8,7 +8,7 @@
 
 #define TESTCARD "smithy"
 
-// Counters for tests and failed tests
+// Counters for number of tests and failed tests
 int numFailedTests = 0;
 int numTests = 0;
 
