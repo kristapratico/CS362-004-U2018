@@ -793,7 +793,7 @@ void villageCard(int handPos, struct gameState *state, int currentPlayer) {
 }
 
 void minionCard(int handPos, struct gameState *state, int currentPlayer, int choice1, int choice2) {
-  //+1 action
+    //+1 action
     state->numActions++;
 
     //discard card from hand

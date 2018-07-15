@@ -81,3 +81,76 @@ File 'dominion.c'
 Lines executed:18.80% of 585
 Creating 'dominion.c.gcov'
 
+cardtest3.c:
+----------------- Testing Card: minion ----------------
+
+~~Testing Choice 1 - Gain 2 coins~~
+TEST 1: Player0 plays minion and gains +1 action
+Player0 gains +1 action: PASSED
+
+TEST 2: Check if minion card was recorded as played
+minion card was recorded as played: PASSED
+
+TEST 3: Player0 chooses to gain +2 coins
+Player0 gains +2 coins: PASSED
+
+TEST 4: Player0 does not gain any cards
+Player0 gains no cards: PASSED
+
+TEST 5: No state change occurs for player1
+Player1 hand count was not changed: PASSED
+Player1 deck count was not changed: PASSED
+
+TEST 6: No state change occurs to victory card piles
+Estate pile unchanged: PASSED
+Duchy pile unchanged: PASSED
+Province pile unchanged: PASSED
+
+TEST 7: No state change occurs to kingdom card piles
+Card 0: PASSED
+Card 1: PASSED
+Card 2: PASSED
+Card 3: PASSED
+Card 4: PASSED
+Card 5: PASSED
+Card 6: PASSED
+Card 7: PASSED
+Card 8: PASSED
+Card 9: PASSED
+
+~~Testing Choice 2 - player0 discards hand, +4 cards, other player with at least 5 cards discards all and draws 4 cards~~
+
+TEST 8: Player0 plays minion and gains +1 action
+Player0 gains +1 action: PASSED
+
+TEST 9: Check if player0 now has 4 cards in hand
+player0 has 4 cards in hand: PASSED
+
+TEST 10: Check if player1 now has 4 cards in hand from the attack
+player1 has 4 cards in hand: FAILED
+
+TEST 11: No state change occurs to victory card piles
+Estate pile unchanged: PASSED
+Duchy pile unchanged: PASSED
+Province pile unchanged: PASSED
+
+TEST 12: No state change occurs to kingdom card piles
+Card 0: PASSED
+Card 1: PASSED
+Card 2: PASSED
+Card 3: PASSED
+Card 4: PASSED
+Card 5: PASSED
+Card 6: PASSED
+Card 7: PASSED
+Card 8: PASSED
+Card 9: PASSED
+
+----End Tests for minion----
+
+Number of Tests Ran: 12
+Number of Tests Failed: 1
+File 'dominion.c'
+Lines executed:22.05% of 585
+Creating 'dominion.c.gcov'
+
