@@ -200,3 +200,32 @@ File 'dominion.c'
 Lines executed:20.00% of 585
 Creating 'dominion.c.gcov'
 
+unittest1.c:
+----------------- Testing Function: isGameOver() ----------------
+
+TEST 1: Game just initialized, check if game is over
+Game is not over: PASSED
+
+TEST 2: Province pile is empty, game is over
+Game is over: PASSED
+
+TEST 3: Three supply piles empty, game is over
+Game is over: FAILED
+
+TEST 4: Two supply piles empty, game is in progress
+Game is not over: PASSED
+
+TEST 5: Three non-kingdom supplies empty (victory card, treasure, curse) empty, game is over
+Game is over: PASSED
+
+TEST 6: Five supply piles empty, game is over
+Game is over: PASSED
+
+----End Tests for isGameOver()----
+
+Number of Tests Ran: 6
+Number of Tests Failed: 1
+File 'dominion.c'
+Lines executed:16.92% of 585
+Creating 'dominion.c.gcov'
+
