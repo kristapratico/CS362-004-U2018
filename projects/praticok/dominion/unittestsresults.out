@@ -209,7 +209,7 @@ Game is not over: PASSED
 TEST 2: Province pile is empty, game is over
 Game is over: PASSED
 
-TEST 3: Three supply piles empty, game is over
+TEST 3: Three supply piles empty (edge of loop case), game is over
 Game is over: FAILED
 
 TEST 4: Two supply piles empty, game is in progress
@@ -218,7 +218,7 @@ Game is not over: PASSED
 TEST 5: Three non-kingdom supplies empty (victory card, treasure, curse) empty, game is over
 Game is over: PASSED
 
-TEST 6: Five supply piles empty, game is over
+TEST 6: Five supply piles empty (check > 3), game is over
 Game is over: PASSED
 
 ----End Tests for isGameOver()----
@@ -227,5 +227,28 @@ Number of Tests Ran: 6
 Number of Tests Failed: 1
 File 'dominion.c'
 Lines executed:16.92% of 585
+Creating 'dominion.c.gcov'
+
+unittest2.c:
+----------------- Testing Function: fullDeckCount() ----------------
+
+TEST 1: Count Gardens, zero present in hand, deck, or discard
+Zero gardens counted: PASSED
+
+TEST 1: Count Gardens, deck: 5; hand: 0; discard: 0
+Five gardens counted: PASSED
+
+TEST 1: Count Gardens, deck: 5; hand: 4; discard: 0
+Nine gardens counted: PASSED
+
+TEST 4: Count Gardens, deck: 5; hand: 4; discard: 1
+Ten gardens counted: PASSED
+
+----End Tests for fullDeckCount()----
+
+Number of Tests Ran: 4
+All tests for fullDeckCount() PASSED
+File 'dominion.c'
+Lines executed:17.26% of 585
 Creating 'dominion.c.gcov'
 
