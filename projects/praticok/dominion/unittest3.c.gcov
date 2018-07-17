@@ -41,7 +41,7 @@
         -:   36:
         1:   37:    int seed = 99;
         -:   38:
-        -:   39:    // state to use for init game and beginningState to check if state changed
+        -:   39:    // state to use for init game 
         -:   40:    struct gameState state;
         -:   41:
         -:   42:    // create a game state

@@ -30,56 +30,55 @@ runtests: testDrawCard
 	cat dominion.c.gcov >> unittestresult.out
 
 unittestresults: cardtest1.c cardtest2.c cardtest3.c cardtest4.c unittest1.c unittest2.c unittest3.c unittest4.c dominion.c rngs.c
-	echo "Running Dominion unit tests" > unittestsresults.out
+	echo "Running Dominion unit tests" > unittestresults.out
 	
-	echo "cardtest1.c:" >> unittestsresults.out
+	echo "cardtest1.c:" >> unittestresults.out
 	gcc -o cardtest1 -g cardtest1.c dominion.c rngs.c $(CFLAGS)
-	./cardtest1 >> unittestsresults.out
-	gcov cardtest1.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
-	cat dominion.c.gcov >> unittestresult.out
+	./cardtest1 >> unittestresults.out
+	gcov cardtest1.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "cardtest2.c:" >> unittestsresults.out
+	echo "cardtest2.c:" >> unittestresults.out
 	gcc -o cardtest2 -g cardtest2.c dominion.c rngs.c $(CFLAGS)
-	./cardtest2 >> unittestsresults.out
-	gcov cardtest2.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./cardtest2 >> unittestresults.out
+	gcov cardtest2.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "cardtest3.c:" >> unittestsresults.out
+	echo "cardtest3.c:" >> unittestresults.out
 	gcc -o cardtest3 -g cardtest3.c dominion.c rngs.c $(CFLAGS)
-	./cardtest3 >> unittestsresults.out
-	gcov cardtest3.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./cardtest3 >> unittestresults.out
+	gcov cardtest3.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "cardtest4.c:" >> unittestsresults.out
+	echo "cardtest4.c:" >> unittestresults.out
 	gcc -o cardtest4 -g cardtest4.c dominion.c rngs.c $(CFLAGS)
-	./cardtest4 >> unittestsresults.out
-	gcov cardtest4.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./cardtest4 >> unittestresults.out
+	gcov cardtest4.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "unittest1.c:" >> unittestsresults.out
+	echo "unittest1.c:" >> unittestresults.out
 	gcc -o unittest1 -g unittest1.c dominion.c rngs.c $(CFLAGS)
-	./unittest1 >> unittestsresults.out
-	gcov unittest1.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./unittest1 >> unittestresults.out
+	gcov unittest1.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "unittest2.c:" >> unittestsresults.out
+	echo "unittest2.c:" >> unittestresults.out
 	gcc -o unittest2 -g unittest2.c dominion.c rngs.c $(CFLAGS)
-	./unittest2 >> unittestsresults.out
-	gcov unittest2.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./unittest2 >> unittestresults.out
+	gcov unittest2.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "unittest3.c:" >> unittestsresults.out
+	echo "unittest3.c:" >> unittestresults.out
 	gcc -o unittest3 -g unittest3.c dominion.c rngs.c $(CFLAGS)
-	./unittest3 >> unittestsresults.out
-	gcov unittest3.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./unittest3 >> unittestresults.out
+	gcov unittest3.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
-	echo "unittest4.c:" >> unittestsresults.out
+	echo "unittest4.c:" >> unittestresults.out
 	gcc -o unittest4 -g unittest4.c dominion.c rngs.c $(CFLAGS)
-	./unittest4 >> unittestsresults.out
-	gcov unittest4.c >> unittestsresults.out
-	gcov dominion.c >> unittestsresults.out
+	./unittest4 >> unittestresults.out
+	gcov unittest4.c >> unittestresults.out
+	gcov dominion.c >> unittestresults.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
@@ -87,4 +86,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4 unittestsresults.out
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4 unittestresults.out
