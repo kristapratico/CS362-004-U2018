@@ -1,0 +1,186 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTFUNCTION "gainCard()"
+        -:   10:
+        -:   11:// Counters for number of tests and failed tests
+        -:   12:int numFailedTests = 0;
+        -:   13:int numTests = 0;
+        -:   14:
+        -:   15:// custom assert 
+       30:   16:void assertTF(int value1, int value2) {
+       30:   17:    if (value1 == value2) {
+       30:   18:        printf("PASSED\n");
+        -:   19:    }
+        -:   20:    else {
+    #####:   21:        printf("FAILED\n");
+    #####:   22:        numFailedTests++;
+        -:   23:    }
+       30:   24:}
+        -:   25:
+        -:   26:// checks if the card is in the player's hand, deck, or discard
+       22:   27:int checkForCard(int player, int card, int location, struct gameState *state) {
+        -:   28:    // if card is present = 1; otherwise = 0
+       22:   29:    int present = 0;
+        -:   30:
+        -:   31:    // location: 0 = discard; 1 = deck; 2 = hand 
+       22:   32:    if (location == 0) {
+        7:   33:        for (int x = 0; x < state->discardCount[player]; x++) {
+        1:   34:            if (state->discard[player][x] == card) {
+        1:   35:                present = 1;
+        -:   36:            }
+        -:   37:        }
+        6:   38:        return present;    
+        -:   39:    }    
+        -:   40:    
+       16:   41:    if (location == 1) {
+       52:   42:        for (int x = 0; x < state->deckCount[player]; x++) {
+       46:   43:            if (state->deck[player][x] == card) {
+        1:   44:                present = 1;
+        -:   45:            }
+        -:   46:        }
+        6:   47:        return present;    
+        -:   48:    }
+        -:   49:    
+       10:   50:    if (location == 2) {
+       36:   51:        for (int x = 0; x < state->handCount[player]; x++) {
+       26:   52:            if (state->hand[player][x] == card) {
+        1:   53:                present = 1;
+        -:   54:            }
+        -:   55:        }
+       10:   56:        return present;    
+        -:   57:    }
+    #####:   58:    return -1;
+        -:   59:}
+        -:   60:
+        -:   61:
+        1:   62:int main () {
+        1:   63:    int numPlayers = 2;
+        1:   64:    int player0 = 0;
+        1:   65:    int player1 = 1;
+        1:   66:    int toDiscard = 0;
+        1:   67:    int toDeck = 1;
+        1:   68:    int toHand = 2;
+        -:   69:
+        -:   70:    // kingdom cards in use
+        1:   71:    int k[10] = {adventurer, minion, feast, gardens, mine,
+        -:   72:               tribute, smithy, village, baron, treasure_map};
+        -:   73:
+        1:   74:    int seed = 99;
+        -:   75:
+        -:   76:    // state to use for init game and beginningState to check if state changed
+        -:   77:    struct gameState state, beginningState;
+        -:   78:
+        -:   79:    // create a game state
+        1:   80:    initializeGame(numPlayers, k, seed, &state);
+        1:   81:    memcpy(&beginningState, &state, sizeof(struct gameState));
+        -:   82:
+        1:   83:    printf("----------------- Testing Function: %s ----------------\n", TESTFUNCTION);
+        -:   84:    
+        -:   85:    // TEST 1: Supply pile is empty or card does not exist in game
+        1:   86:    numTests++;
+        1:   87:    printf("\nTEST 1: Supply pile is empty or card does not exist in game\n");
+        1:   88:    state.supplyCount[adventurer] = 0;
+        1:   89:    printf("Supply pile empty, return -1: ");
+        1:   90:    assertTF(gainCard(adventurer, &state, toHand, player0), -1);
+        1:   91:    printf("Player0 did not gain adventurer card in hand: ");
+        1:   92:    assertTF(checkForCard(player0, adventurer, toHand, &state), 0);
+        1:   93:    printf("Player1 did not gain adventurer card in hand: ");
+        1:   94:    assertTF(checkForCard(player1, adventurer, toHand, &state), 0);
+        -:   95:    
+        1:   96:    printf("Card not in game, return -1: ");
+        1:   97:    assertTF(gainCard(outpost, &state, toHand, player0), -1);
+        1:   98:    printf("Player0 did not gain outpost card in hand: ");
+        1:   99:    assertTF(checkForCard(player0, outpost, toHand, &state), 0);
+        1:  100:    printf("Player1 did not gain outpost card in hand: ");
+        1:  101:    assertTF(checkForCard(player1, outpost, toHand, &state), 0);
+        -:  102:
+        1:  103:    memcpy(&state, &beginningState, sizeof(struct gameState));
+        -:  104:    // TEST 2: Add village to player0's hand
+        1:  105:    numTests++;
+        1:  106:    printf("\nTEST 2: Add village to player0's hand\n");
+        1:  107:    gainCard(village, &state, toHand, player0);
+        1:  108:    printf("Village is in player0's hand: ");
+        1:  109:    assertTF(checkForCard(player0, village, toHand, &state), 1);
+        1:  110:    printf("player0's hand count increased: ");
+        1:  111:    assertTF(state.handCount[player0], beginningState.handCount[player0] + 1);
+        1:  112:    printf("Village was not added to player0's deck: ");
+        1:  113:    assertTF(checkForCard(player0, village, toDeck, &state), 0);
+        1:  114:    printf("Village was not added to player0's discard: ");
+        1:  115:    assertTF(checkForCard(player0, village, toDiscard, &state), 0);
+        1:  116:    printf("Village was not added to player1's hand: ");
+        1:  117:    assertTF(checkForCard(player1, village, toHand, &state), 0);
+        1:  118:    printf("Village was not added to player1's deck: ");
+        1:  119:    assertTF(checkForCard(player1, village, toDeck, &state), 0);
+        1:  120:    printf("Village was not added to player1's discard: ");
+        1:  121:    assertTF(checkForCard(player1, village, toDiscard, &state), 0);
+        1:  122:    printf("Supply pile for village is decremented: ");
+        1:  123:    assertTF(state.supplyCount[village], 9);
+        -:  124:
+        1:  125:    memcpy(&state, &beginningState, sizeof(struct gameState));
+        -:  126:    // TEST 3: Add village to player0's deck
+        1:  127:    numTests++;
+        1:  128:    printf("\nTEST 3: Add village to player0's deck\n");
+        1:  129:    gainCard(village, &state, toDeck, player0);
+        1:  130:    printf("Village is in player0's deck: ");
+        1:  131:    assertTF(checkForCard(player0, village, toDeck, &state), 1);
+        1:  132:    printf("player0's deck count increased: ");
+        1:  133:    assertTF(state.deckCount[player0], beginningState.deckCount[player0] + 1);
+        1:  134:    printf("Village was not added to player0's hand: ");
+        1:  135:    assertTF(checkForCard(player0, village, toHand, &state), 0);
+        1:  136:    printf("Village was not added to player0's discard: ");
+        1:  137:    assertTF(checkForCard(player0, village, toDiscard, &state), 0);
+        1:  138:    printf("Village was not added to player1's hand: ");
+        1:  139:    assertTF(checkForCard(player1, village, toHand, &state), 0);
+        1:  140:    printf("Village was not added to player1's deck: ");
+        1:  141:    assertTF(checkForCard(player1, village, toDeck, &state), 0);
+        1:  142:    printf("Village was not added to player1's discard: ");
+        1:  143:    assertTF(checkForCard(player1, village, toDiscard, &state), 0);
+        1:  144:    printf("Supply pile for village is decremented: ");
+        1:  145:    assertTF(state.supplyCount[village], 9);
+        -:  146:
+        -:  147:
+        1:  148:    memcpy(&state, &beginningState, sizeof(struct gameState));
+        -:  149:    // TEST 4: Add village to player0's discard
+        1:  150:    numTests++;
+        1:  151:    printf("\nTEST 4: Add village to player0's discard\n");
+        1:  152:    gainCard(village, &state, toDiscard, player0);
+        1:  153:    printf("Village is in player0's discard: ");
+        1:  154:    assertTF(checkForCard(player0, village, toDiscard, &state), 1);
+        1:  155:    printf("player0's discard count increased: ");
+        1:  156:    assertTF(state.discardCount[player0], beginningState.discardCount[player0] + 1);
+        1:  157:    printf("Village was not added to player0's hand: ");
+        1:  158:    assertTF(checkForCard(player0, village, toHand, &state), 0);
+        1:  159:    printf("Village was not added to player0's deck: ");
+        1:  160:    assertTF(checkForCard(player0, village, toDeck, &state), 0);
+        1:  161:    printf("Village was not added to player1's hand: ");
+        1:  162:    assertTF(checkForCard(player1, village, toHand, &state), 0);
+        1:  163:    printf("Village was not added to player1's deck: ");
+        1:  164:    assertTF(checkForCard(player1, village, toDeck, &state), 0);
+        1:  165:    printf("Village was not added to player1's discard: ");
+        1:  166:    assertTF(checkForCard(player1, village, toDiscard, &state), 0);
+        1:  167:    printf("Supply pile for village is decremented: ");
+        1:  168:    assertTF(state.supplyCount[village], 9);
+        -:  169:
+        1:  170:    printf("\n----End Tests for %s----\n", TESTFUNCTION);
+        1:  171:    printf("\nNumber of Tests Ran: %d\n", numTests);
+        -:  172:    
+        1:  173:    if (numFailedTests == 0) {
+        1:  174:        printf("All tests for %s PASSED\n", TESTFUNCTION);
+        -:  175:    }
+        -:  176:    else {
+    #####:  177:        printf("Number of Tests Failed: %d\n", numFailedTests);
+        -:  178:    }
+        -:  179:
+        1:  180:    return 0;
+        -:  181:}

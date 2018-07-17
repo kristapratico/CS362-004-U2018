@@ -1,0 +1,176 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <string.h>
+        -:    4:#include <stdio.h>
+        -:    5:#include <assert.h>
+        -:    6:#include "rngs.h"
+        -:    7:#include <stdlib.h>
+        -:    8:
+        -:    9:#define TESTCARD "minion"
+        -:   10:
+        -:   11:// Counters for number of tests and failed tests
+        -:   12:int numFailedTests = 0;
+        -:   13:int numTests = 0;
+        -:   14:
+        -:   15:// custom assert 
+       36:   16:void assertTF(int value1, int value2) {
+       36:   17:    if (value1 == value2) {
+       35:   18:        printf("PASSED\n");
+        -:   19:    }
+        -:   20:    else {
+        1:   21:        printf("FAILED\n");
+        1:   22:        numFailedTests++;
+        -:   23:    }
+       36:   24:}
+        -:   25:
+        1:   26:int main () {
+        1:   27:    int numPlayers = 2;
+        1:   28:    int player0 = 0;
+        1:   29:    int player1 = 1;
+        1:   30:    int discard = 1;
+        1:   31:    int handPos = 0;
+        -:   32:    int choice1, choice2, choice3;
+        1:   33:    choice1 = choice2 = choice3 = 0;
+        1:   34:    int bonus = 0;
+        -:   35:    
+        -:   36:
+        -:   37:    // kingdom cards in use
+        1:   38:    int k[10] = {adventurer, minion, feast, gardens, mine,
+        -:   39:               tribute, smithy, village, baron, council_room};
+        -:   40:
+        1:   41:    int seed = 99;
+        -:   42:
+        -:   43:    // state to use for init game and beginningState to check if state changed
+        -:   44:    struct gameState state, beginningState;
+        -:   45:
+        -:   46:    // create a game state
+        1:   47:    initializeGame(numPlayers, k, seed, &state);
+        -:   48:
+        1:   49:    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+        -:   50:    
+        -:   51:    // TESTING CHOICE 1
+        1:   52:    printf("\n~~Testing Choice 1 - Gain 2 coins~~\n");
+        1:   53:    memcpy(&beginningState, &state, sizeof(struct gameState));
+        1:   54:    choice1 = 1;
+        1:   55:    cardEffect(minion, choice1, choice2, choice3, &state, handPos, &bonus);
+        -:   56:    
+        -:   57:    // TEST 1: Current player receives +1 action
+        1:   58:    numTests++;
+        1:   59:    printf("TEST 1: Player0 plays minion and gains +1 action\n");
+        1:   60:    printf("Player0 gains +1 action: ");
+        1:   61:    assertTF(state.numActions, beginningState.numActions + 1);
+        -:   62:
+        -:   63:    // TEST 2: Check if minion card is recorded as played
+        1:   64:    numTests++;
+        1:   65:    printf("\nTEST 2: Check if minion card was recorded as played\n");
+        1:   66:    printf("minion card was recorded as played: ");
+        1:   67:    assertTF(state.playedCardCount, beginningState.playedCardCount + 1);
+        -:   68:
+        -:   69:    // TEST 3: Player0 gains +2 coins
+        1:   70:    numTests++;
+        1:   71:    printf("\nTEST 3: Player0 chooses to gain +2 coins\n");
+        1:   72:    printf("Player0 gains +2 coins: ");
+        1:   73:    assertTF(state.coins, beginningState.coins + 2);
+        -:   74:
+        -:   75:    // TEST 4: Player0 does not gain any cards
+        1:   76:    numTests++;
+        1:   77:    printf("\nTEST 4: Player0 does not gain any cards\n");
+        1:   78:    printf("Player0 gains no cards: ");
+        1:   79:    assertTF(state.handCount[player0], beginningState.handCount[player0] - discard);
+        -:   80:
+        -:   81:    // TEST 5: No state change occurs for other player
+        1:   82:    numTests++;
+        1:   83:    printf("\nTEST 5: No state change occurs for player1\n");
+        1:   84:    printf("Player1 hand count was not changed: ");
+        1:   85:    assertTF(state.handCount[player1], beginningState.handCount[player1]);
+        1:   86:    printf("Player1 deck count was not changed: ");
+        1:   87:    assertTF(state.deckCount[player1], beginningState.deckCount[player1]);
+        -:   88:
+        -:   89:    // TEST 6: No state change occurs to the victory card piles
+        1:   90:    numTests++;
+        1:   91:    printf("\nTEST 6: No state change occurs to victory card piles\n");
+        1:   92:    printf("Estate pile unchanged: ");
+        1:   93:    assertTF(state.supplyCount[estate], beginningState.supplyCount[estate]);
+        1:   94:    printf("Duchy pile unchanged: ");
+        1:   95:    assertTF(state.supplyCount[duchy], beginningState.supplyCount[duchy]);
+        1:   96:    printf("Province pile unchanged: ");
+        1:   97:    assertTF(state.supplyCount[province], beginningState.supplyCount[province]);
+        -:   98:
+        -:   99:    // TEST 7: No state change occurs to the kingdom card piles
+        1:  100:    numTests++;
+        1:  101:    printf("\nTEST 7: No state change occurs to kingdom card piles\n");
+       11:  102:    for (int x = 0; x < 10; x++) {
+       10:  103:        printf("Card %d: ", x);
+       10:  104:        assertTF(state.supplyCount[k[x]], beginningState.supplyCount[k[x]]);
+        -:  105:    }
+        -:  106:
+        -:  107:    // TESTING CHOICE 2
+        1:  108:    printf("\n~~Testing Choice 2 - player0 discards hand, +4 cards, other player with at least 5 cards discards all and draws 4 cards~~\n");
+        -:  109:    struct gameState state2;
+        1:  110:    initializeGame(numPlayers, k, seed, &state2);
+        1:  111:    memcpy(&beginningState, &state2, sizeof(struct gameState));
+        1:  112:    handPos = 0;
+        1:  113:    choice1 = 0;
+        1:  114:    choice2 = 1;
+        1:  115:    cardEffect(minion, choice1, choice2, choice3, &state2, handPos, &bonus);
+        -:  116:
+        -:  117:    // TEST 8: Current player receives +1 action
+        1:  118:    numTests++;
+        1:  119:    printf("\nTEST 8: Player0 plays minion and gains +1 action\n");
+        1:  120:    printf("Player0 gains +1 action: ");
+        1:  121:    assertTF(state2.numActions, beginningState.numActions + 1);
+        -:  122:
+        -:  123:    // TEST 9: Player0 now has 4 cards in hand
+        1:  124:    numTests++;
+        1:  125:    printf("\nTEST 9: Check if player0 now has 4 cards in hand\n");
+        1:  126:    printf("player0 has 4 cards in hand: ");
+        1:  127:    assertTF(state2.handCount[player0], beginningState.handCount[player0] - 1);
+        -:  128:
+        -:  129:    // TEST 10: Player0 received 4 cards from his own pile
+        1:  130:    numTests++;
+        1:  131:    printf("\nTEST 3: Player0 gains 4 cards from his own pile\n");
+        1:  132:    printf("Player0 drew 4 cards from his own pile: ");
+        1:  133:    assertTF(state2.deckCount[player0], beginningState.deckCount[player0] - 4);
+        -:  134:
+        -:  135:    // TEST 11: Player1 now has 4 cards in hand from the attack
+        1:  136:    numTests++;
+        1:  137:    printf("\nTEST 11: Check if player1 now has 4 cards in hand from the attack\n");
+        1:  138:    printf("player1 has 4 cards in hand: ");
+        1:  139:    assertTF(state2.handCount[player1], 4);
+        -:  140:
+        -:  141:    // TEST 12: No state change occurs to the victory card piles
+        1:  142:    numTests++;
+        1:  143:    printf("\nTEST 12: No state change occurs to victory card piles\n");
+        1:  144:    printf("Estate pile unchanged: ");
+        1:  145:    assertTF(state2.supplyCount[estate], beginningState.supplyCount[estate]);
+        1:  146:    printf("Duchy pile unchanged: ");
+        1:  147:    assertTF(state2.supplyCount[duchy], beginningState.supplyCount[duchy]);
+        1:  148:    printf("Province pile unchanged: ");
+        1:  149:    assertTF(state2.supplyCount[province], beginningState.supplyCount[province]);
+        -:  150:
+        -:  151:    // TEST 13: No state change occurs to the kingdom card piles
+        1:  152:    numTests++;
+        1:  153:    printf("\nTEST 13: No state change occurs to kingdom card piles\n");
+       11:  154:    for (int x = 0; x < 10; x++) {
+       10:  155:        printf("Card %d: ", x);
+       10:  156:        assertTF(state2.supplyCount[k[x]], beginningState.supplyCount[k[x]]);
+        -:  157:    }
+        -:  158:
+        -:  159:
+        1:  160:    printf("\n----End Tests for %s----\n", TESTCARD);
+        1:  161:    printf("\nNumber of Tests Ran: %d\n", numTests);
+        -:  162:    
+        1:  163:    if (numFailedTests == 0) {
+    #####:  164:        printf("All tests for %s PASSED\n", TESTCARD);
+        -:  165:    }
+        -:  166:    else {
+        1:  167:        printf("Number of Tests Failed: %d\n", numFailedTests);
+        -:  168:    }
+        -:  169:
+        1:  170:    return 0;
+        -:  171:}

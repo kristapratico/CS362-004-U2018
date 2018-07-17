@@ -35,6 +35,10 @@ Card 9: PASSED
 
 Number of Tests Ran: 6
 Number of Tests Failed: 2
+File 'cardtest1.c'
+Lines executed:98.25% of 57
+Creating 'cardtest1.c.gcov'
+
 File 'dominion.c'
 Lines executed:20.00% of 585
 Creating 'dominion.c.gcov'
@@ -77,6 +81,10 @@ Card 9: PASSED
 
 Number of Tests Ran: 6
 Number of Tests Failed: 2
+File 'cardtest2.c'
+Lines executed:98.57% of 70
+Creating 'cardtest2.c.gcov'
+
 File 'dominion.c'
 Lines executed:18.80% of 585
 Creating 'dominion.c.gcov'
@@ -153,6 +161,10 @@ Card 9: PASSED
 
 Number of Tests Ran: 13
 Number of Tests Failed: 1
+File 'cardtest3.c'
+Lines executed:98.99% of 99
+Creating 'cardtest3.c.gcov'
+
 File 'dominion.c'
 Lines executed:22.05% of 585
 Creating 'dominion.c.gcov'
@@ -196,6 +208,10 @@ Card 9: PASSED
 
 Number of Tests Ran: 7
 All tests for village PASSED
+File 'cardtest4.c'
+Lines executed:95.08% of 61
+Creating 'cardtest4.c.gcov'
+
 File 'dominion.c'
 Lines executed:20.00% of 585
 Creating 'dominion.c.gcov'
@@ -225,6 +241,10 @@ Game is over: PASSED
 
 Number of Tests Ran: 6
 Number of Tests Failed: 1
+File 'unittest1.c'
+Lines executed:98.51% of 67
+Creating 'unittest1.c.gcov'
+
 File 'dominion.c'
 Lines executed:16.92% of 585
 Creating 'dominion.c.gcov'
@@ -248,6 +268,10 @@ Ten gardens counted: PASSED
 
 Number of Tests Ran: 4
 All tests for fullDeckCount() PASSED
+File 'unittest2.c'
+Lines executed:92.68% of 41
+Creating 'unittest2.c.gcov'
+
 File 'dominion.c'
 Lines executed:17.26% of 585
 Creating 'dominion.c.gcov'
@@ -277,6 +301,10 @@ Number of actions decremented: PASSED
 
 Number of Tests Ran: 5
 All tests for playCard() PASSED
+File 'unittest3.c'
+Lines executed:95.00% of 60
+Creating 'unittest3.c.gcov'
+
 File 'dominion.c'
 Lines executed:26.84% of 585
 Creating 'dominion.c.gcov'
@@ -326,6 +354,10 @@ Supply pile for village is decremented: PASSED
 
 Number of Tests Ran: 4
 All tests for gainCard() PASSED
+File 'unittest4.c'
+Lines executed:96.58% of 117
+Creating 'unittest4.c.gcov'
+
 File 'dominion.c'
 Lines executed:17.78% of 585
 Creating 'dominion.c.gcov'

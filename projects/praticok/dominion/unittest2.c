@@ -33,7 +33,7 @@ int main () {
 
     int seed = 99;
 
-    // state to use for init game and beginningState to check if state changed
+    // state to use for init game 
     struct gameState state;
 
     // create a game state
