@@ -294,6 +294,7 @@ Player1 did not gain outpost card in hand: PASSED
 
 TEST 2: Add village to player0's hand
 Village is in player0's hand: PASSED
+player0's hand count increased: PASSED
 Village was not added to player0's deck: PASSED
 Village was not added to player0's discard: PASSED
 Village was not added to player1's hand: PASSED
@@ -301,8 +302,9 @@ Village was not added to player1's deck: PASSED
 Village was not added to player1's discard: PASSED
 Supply pile for village is decremented: PASSED
 
-TEST 2: Add village to player0's deck
+TEST 3: Add village to player0's deck
 Village is in player0's deck: PASSED
+player0's deck count increased: PASSED
 Village was not added to player0's hand: PASSED
 Village was not added to player0's discard: PASSED
 Village was not added to player1's hand: PASSED
@@ -310,8 +312,9 @@ Village was not added to player1's deck: PASSED
 Village was not added to player1's discard: PASSED
 Supply pile for village is decremented: PASSED
 
-TEST 2: Add village to player0's discard
+TEST 4: Add village to player0's discard
 Village is in player0's discard: PASSED
+player0's discard count increased: PASSED
 Village was not added to player0's hand: PASSED
 Village was not added to player0's deck: PASSED
 Village was not added to player1's hand: PASSED

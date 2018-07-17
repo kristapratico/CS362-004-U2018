@@ -107,6 +107,8 @@ int main () {
     gainCard(village, &state, toHand, player0);
     printf("Village is in player0's hand: ");
     assertTF(checkForCard(player0, village, toHand, &state), 1);
+    printf("player0's hand count increased: ");
+    assertTF(state.handCount[player0], beginningState.handCount[player0] + 1);
     printf("Village was not added to player0's deck: ");
     assertTF(checkForCard(player0, village, toDeck, &state), 0);
     printf("Village was not added to player0's discard: ");
@@ -127,6 +129,8 @@ int main () {
     gainCard(village, &state, toDeck, player0);
     printf("Village is in player0's deck: ");
     assertTF(checkForCard(player0, village, toDeck, &state), 1);
+    printf("player0's deck count increased: ");
+    assertTF(state.deckCount[player0], beginningState.deckCount[player0] + 1);
     printf("Village was not added to player0's hand: ");
     assertTF(checkForCard(player0, village, toHand, &state), 0);
     printf("Village was not added to player0's discard: ");
@@ -148,6 +152,8 @@ int main () {
     gainCard(village, &state, toDiscard, player0);
     printf("Village is in player0's discard: ");
     assertTF(checkForCard(player0, village, toDiscard, &state), 1);
+    printf("player0's discard count increased: ");
+    assertTF(state.discardCount[player0], beginningState.discardCount[player0] + 1);
     printf("Village was not added to player0's hand: ");
     assertTF(checkForCard(player0, village, toHand, &state), 0);
     printf("Village was not added to player0's deck: ");
