@@ -235,10 +235,10 @@ unittest2.c:
 TEST 1: Count Gardens, zero present in hand, deck, or discard
 Zero gardens counted: PASSED
 
-TEST 1: Count Gardens, deck: 5; hand: 0; discard: 0
+TEST 2: Count Gardens, deck: 5; hand: 0; discard: 0
 Five gardens counted: PASSED
 
-TEST 1: Count Gardens, deck: 5; hand: 4; discard: 0
+TEST 3: Count Gardens, deck: 5; hand: 4; discard: 0
 Nine gardens counted: PASSED
 
 TEST 4: Count Gardens, deck: 5; hand: 4; discard: 1
@@ -250,5 +250,34 @@ Number of Tests Ran: 4
 All tests for fullDeckCount() PASSED
 File 'dominion.c'
 Lines executed:17.26% of 585
+Creating 'dominion.c.gcov'
+
+unittest3.c:
+----------------- Testing Function: playCard() ----------------
+
+TEST 1: Not play phase, should return -1
+Not play phase: PASSED
+
+TEST 2: No actions left to play cards, should return -1
+No actions left to play: PASSED
+
+TEST 3: Card chosen to play is an action card
+Play adventurer: PASSED
+Play treasure_map: PASSED
+Play province (returns -1): PASSED
+Play curse (returns -1): PASSED
+
+TEST 4: Play Gardens to test cardEffect branch, should return -1
+Play gardens (returns -1): PASSED
+
+TEST 5: Number of actions decremented after card played
+Number of actions decremented: PASSED
+
+----End Tests for playCard()----
+
+Number of Tests Ran: 5
+All tests for playCard() PASSED
+File 'dominion.c'
+Lines executed:26.84% of 585
 Creating 'dominion.c.gcov'
 
