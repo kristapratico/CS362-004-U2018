@@ -281,3 +281,49 @@ File 'dominion.c'
 Lines executed:26.84% of 585
 Creating 'dominion.c.gcov'
 
+unittest4.c:
+----------------- Testing Function: gainCard() ----------------
+
+TEST 1: Supply pile is empty or card does not exist in game
+Supply pile empty, return -1: PASSED
+Player0 did not gain adventurer card in hand: PASSED
+Player1 did not gain adventurer card in hand: PASSED
+Card not in game, return -1: PASSED
+Player0 did not gain outpost card in hand: PASSED
+Player1 did not gain outpost card in hand: PASSED
+
+TEST 2: Add village to player0's hand
+Village is in player0's hand: PASSED
+Village was not added to player0's deck: PASSED
+Village was not added to player0's discard: PASSED
+Village was not added to player1's hand: PASSED
+Village was not added to player1's deck: PASSED
+Village was not added to player1's discard: PASSED
+Supply pile for village is decremented: PASSED
+
+TEST 2: Add village to player0's deck
+Village is in player0's deck: PASSED
+Village was not added to player0's hand: PASSED
+Village was not added to player0's discard: PASSED
+Village was not added to player1's hand: PASSED
+Village was not added to player1's deck: PASSED
+Village was not added to player1's discard: PASSED
+Supply pile for village is decremented: PASSED
+
+TEST 2: Add village to player0's discard
+Village is in player0's discard: PASSED
+Village was not added to player0's hand: PASSED
+Village was not added to player0's deck: PASSED
+Village was not added to player1's hand: PASSED
+Village was not added to player1's deck: PASSED
+Village was not added to player1's discard: PASSED
+Supply pile for village is decremented: PASSED
+
+----End Tests for gainCard()----
+
+Number of Tests Ran: 4
+All tests for gainCard() PASSED
+File 'dominion.c'
+Lines executed:17.78% of 585
+Creating 'dominion.c.gcov'
+
