@@ -34,10 +34,11 @@ int main () {
     int seed = 99;
 
     // state to use for init game 
-    struct gameState state;
+    struct gameState state, beginningState;
 
     // create a game state
     initializeGame(numPlayers, k, seed, &state);
+    memcpy(&beginningState, &state, sizeof(struct gameState));
 
     printf("----------------- Testing Function: %s ----------------\n", TESTFUNCTION);
     
@@ -70,6 +71,25 @@ int main () {
     state.discardCount[player0] = 1;
     printf("Ten gardens counted: ");
     assertTF(fullDeckCount(player0, gardens, &state), 10);
+
+
+    memcpy(&state, &beginningState, sizeof(struct gameState));
+    // TEST 5: Enumerating Gardens, 1 garden in deck, 1 in hand, 1 in discard,
+    // plus other cards that are not gardens
+    numTests++;
+    printf("\nTEST 5: Count Gardens in deck, hand, discard (3 total) but do not count villages\n");
+    state.discard[player0][0] = gardens;
+    state.discard[player0][1] = village;
+    state.discard[player0][2] = village;
+    state.discardCount[player0] = 3;
+    state.hand[player0][0] = gardens;
+    state.hand[player0][1] = village;
+    state.hand[player0][2] = village;
+    state.deck[player0][0] = gardens;
+    state.deck[player0][1] = village;
+    state.deck[player0][2] = village;
+    printf("Three gardens counted: ");
+    assertTF(fullDeckCount(player0, gardens, &state), 3); 
 
 
     printf("\n----End Tests for %s----\n", TESTFUNCTION);

@@ -35,10 +35,6 @@ Card 9: PASSED
 
 Number of Tests Ran: 6
 Number of Tests Failed: 2
-File 'cardtest1.c'
-Lines executed:98.25% of 57
-Creating 'cardtest1.c.gcov'
-
 File 'dominion.c'
 Lines executed:20.00% of 585
 Creating 'dominion.c.gcov'
@@ -1576,10 +1572,6 @@ Card 9: PASSED
 
 Number of Tests Ran: 6
 Number of Tests Failed: 2
-File 'cardtest2.c'
-Lines executed:98.57% of 70
-Creating 'cardtest2.c.gcov'
-
 File 'dominion.c'
 Lines executed:18.80% of 585
 Creating 'dominion.c.gcov'
@@ -3128,7 +3120,7 @@ TEST 3: Player0 gains 4 cards from his own pile
 Player0 drew 4 cards from his own pile: PASSED
 
 TEST 11: Check if player1 now has 4 cards in hand from the attack
-player1 has 4 cards in hand: player1 hand: 5FAILED
+player1 has 4 cards in hand: FAILED
 
 TEST 12: No state change occurs to victory card piles
 Estate pile unchanged: PASSED
@@ -3151,10 +3143,6 @@ Card 9: PASSED
 
 Number of Tests Ran: 13
 Number of Tests Failed: 1
-File 'cardtest3.c'
-Lines executed:99.01% of 101
-Creating 'cardtest3.c.gcov'
-
 File 'dominion.c'
 Lines executed:22.74% of 585
 Creating 'dominion.c.gcov'
@@ -4693,10 +4681,6 @@ Card 9: PASSED
 
 Number of Tests Ran: 7
 All tests for village PASSED
-File 'cardtest4.c'
-Lines executed:95.08% of 61
-Creating 'cardtest4.c.gcov'
-
 File 'dominion.c'
 Lines executed:20.00% of 585
 Creating 'dominion.c.gcov'
@@ -6221,10 +6205,6 @@ Game is over: PASSED
 
 Number of Tests Ran: 6
 Number of Tests Failed: 1
-File 'unittest1.c'
-Lines executed:98.51% of 67
-Creating 'unittest1.c.gcov'
-
 File 'dominion.c'
 Lines executed:16.92% of 585
 Creating 'dominion.c.gcov'
@@ -7739,14 +7719,13 @@ Nine gardens counted: PASSED
 TEST 4: Count Gardens, deck: 5; hand: 4; discard: 1
 Ten gardens counted: PASSED
 
+TEST 5: Count Gardens in deck, hand, discard (3 total) but do not count villages
+Three gardens counted: PASSED
+
 ----End Tests for fullDeckCount()----
 
-Number of Tests Ran: 4
+Number of Tests Ran: 5
 All tests for fullDeckCount() PASSED
-File 'unittest2.c'
-Lines executed:92.68% of 41
-Creating 'unittest2.c.gcov'
-
 File 'dominion.c'
 Lines executed:17.26% of 585
 Creating 'dominion.c.gcov'
@@ -8101,30 +8080,30 @@ Creating 'dominion.c.gcov'
     #####:  343:  return state->supplyCount[card];
         -:  344:}
         -:  345:
-        4:  346:int fullDeckCount(int player, int card, struct gameState *state)
+        5:  346:int fullDeckCount(int player, int card, struct gameState *state)
         -:  347:{
         -:  348:  int i;
-        4:  349:  int count = 0;
+        5:  349:  int count = 0;
         -:  350:
-       24:  351:  for (i = 0; i < state->deckCount[player]; i++)
+       30:  351:  for (i = 0; i < state->deckCount[player]; i++)
         -:  352:  {
-       20:  353:    if (state->deck[player][i] == card)
-       15:  354:      count++;
+       25:  353:    if (state->deck[player][i] == card)
+       16:  354:      count++;
         -:  355:  }
         -:  356:
-       24:  357:  for (i = 0; i < state->handCount[player]; i++)
+       30:  357:  for (i = 0; i < state->handCount[player]; i++)
         -:  358:  {
-       20:  359:    if (state->hand[player][i] == card)
-        8:  360:      count++;
+       25:  359:    if (state->hand[player][i] == card)
+        9:  360:      count++;
         -:  361:  }
         -:  362:
-        5:  363:  for (i = 0; i < state->discardCount[player]; i++)
+        9:  363:  for (i = 0; i < state->discardCount[player]; i++)
         -:  364:  {
-        1:  365:    if (state->discard[player][i] == card)
-        1:  366:      count++;
+        4:  365:    if (state->discard[player][i] == card)
+        2:  366:      count++;
         -:  367:  }
         -:  368:
-        4:  369:  return count;
+        5:  369:  return count;
         -:  370:}
         -:  371:
     #####:  372:int whoseTurn(struct gameState *state)
@@ -9271,10 +9250,6 @@ Number of actions decremented: PASSED
 
 Number of Tests Ran: 5
 All tests for playCard() PASSED
-File 'unittest3.c'
-Lines executed:95.00% of 60
-Creating 'unittest3.c.gcov'
-
 File 'dominion.c'
 Lines executed:26.84% of 585
 Creating 'dominion.c.gcov'
@@ -10819,10 +10794,6 @@ Supply pile for village is decremented: PASSED
 
 Number of Tests Ran: 4
 All tests for gainCard() PASSED
-File 'unittest4.c'
-Lines executed:96.58% of 117
-Creating 'unittest4.c.gcov'
-
 File 'dominion.c'
 Lines executed:17.78% of 585
 Creating 'dominion.c.gcov'
