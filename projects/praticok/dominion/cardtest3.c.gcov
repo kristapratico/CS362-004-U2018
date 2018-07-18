@@ -117,60 +117,64 @@
         1:  112:    handPos = 0;
         1:  113:    choice1 = 0;
         1:  114:    choice2 = 1;
-        1:  115:    cardEffect(minion, choice1, choice2, choice3, &state2, handPos, &bonus);
-        -:  116:
-        -:  117:    // TEST 8: Current player receives +1 action
-        1:  118:    numTests++;
-        1:  119:    printf("\nTEST 8: Player0 plays minion and gains +1 action\n");
-        1:  120:    printf("Player0 gains +1 action: ");
-        1:  121:    assertTF(state2.numActions, beginningState.numActions + 1);
-        -:  122:
-        -:  123:    // TEST 9: Player0 now has 4 cards in hand
-        1:  124:    numTests++;
-        1:  125:    printf("\nTEST 9: Check if player0 now has 4 cards in hand\n");
-        1:  126:    printf("player0 has 4 cards in hand: ");
-        1:  127:    assertTF(state2.handCount[player0], beginningState.handCount[player0] - 1);
-        -:  128:
-        -:  129:    // TEST 10: Player0 received 4 cards from his own pile
-        1:  130:    numTests++;
-        1:  131:    printf("\nTEST 3: Player0 gains 4 cards from his own pile\n");
-        1:  132:    printf("Player0 drew 4 cards from his own pile: ");
-        1:  133:    assertTF(state2.deckCount[player0], beginningState.deckCount[player0] - 4);
-        -:  134:
-        -:  135:    // TEST 11: Player1 now has 4 cards in hand from the attack
-        1:  136:    numTests++;
-        1:  137:    printf("\nTEST 11: Check if player1 now has 4 cards in hand from the attack\n");
-        1:  138:    printf("player1 has 4 cards in hand: ");
-        1:  139:    assertTF(state2.handCount[player1], 4);
-        -:  140:
-        -:  141:    // TEST 12: No state change occurs to the victory card piles
-        1:  142:    numTests++;
-        1:  143:    printf("\nTEST 12: No state change occurs to victory card piles\n");
-        1:  144:    printf("Estate pile unchanged: ");
-        1:  145:    assertTF(state2.supplyCount[estate], beginningState.supplyCount[estate]);
-        1:  146:    printf("Duchy pile unchanged: ");
-        1:  147:    assertTF(state2.supplyCount[duchy], beginningState.supplyCount[duchy]);
-        1:  148:    printf("Province pile unchanged: ");
-        1:  149:    assertTF(state2.supplyCount[province], beginningState.supplyCount[province]);
-        -:  150:
-        -:  151:    // TEST 13: No state change occurs to the kingdom card piles
-        1:  152:    numTests++;
-        1:  153:    printf("\nTEST 13: No state change occurs to kingdom card piles\n");
-       11:  154:    for (int x = 0; x < 10; x++) {
-       10:  155:        printf("Card %d: ", x);
-       10:  156:        assertTF(state2.supplyCount[k[x]], beginningState.supplyCount[k[x]]);
-        -:  157:    }
-        -:  158:
-        -:  159:
-        1:  160:    printf("\n----End Tests for %s----\n", TESTCARD);
-        1:  161:    printf("\nNumber of Tests Ran: %d\n", numTests);
-        -:  162:    
-        1:  163:    if (numFailedTests == 0) {
-    #####:  164:        printf("All tests for %s PASSED\n", TESTCARD);
-        -:  165:    }
-        -:  166:    else {
-        1:  167:        printf("Number of Tests Failed: %d\n", numFailedTests);
-        -:  168:    }
-        -:  169:
-        1:  170:    return 0;
-        -:  171:}
+        -:  115:    // give player1 a full hand before turn so attack can be observed
+        1:  116:    state2.handCount[player1] = 5;
+        -:  117:
+        1:  118:    cardEffect(minion, choice1, choice2, choice3, &state2, handPos, &bonus);
+        -:  119:
+        -:  120:    // TEST 8: Current player receives +1 action
+        1:  121:    numTests++;
+        1:  122:    printf("\nTEST 8: Player0 plays minion and gains +1 action\n");
+        1:  123:    printf("Player0 gains +1 action: ");
+        1:  124:    assertTF(state2.numActions, beginningState.numActions + 1);
+        -:  125:
+        -:  126:    // TEST 9: Player0 now has 4 cards in hand
+        1:  127:    numTests++;
+        1:  128:    printf("\nTEST 9: Check if player0 now has 4 cards in hand\n");
+        1:  129:    printf("player0 has 4 cards in hand: ");
+        1:  130:    assertTF(state2.handCount[player0], beginningState.handCount[player0] - 1);
+        -:  131:
+        -:  132:    // TEST 10: Player0 received 4 cards from his own pile
+        1:  133:    numTests++;
+        1:  134:    printf("\nTEST 3: Player0 gains 4 cards from his own pile\n");
+        1:  135:    printf("Player0 drew 4 cards from his own pile: ");
+        1:  136:    assertTF(state2.deckCount[player0], beginningState.deckCount[player0] - 4);
+        -:  137:
+        -:  138:    // TEST 11: Player1 now has 4 cards in hand from the attack
+        1:  139:    numTests++;
+        1:  140:    printf("\nTEST 11: Check if player1 now has 4 cards in hand from the attack\n");
+        1:  141:    printf("player1 has 4 cards in hand: ");
+        1:  142:    printf("player1 hand: %d", state2.handCount[player1]); 
+        1:  143:    assertTF(state2.handCount[player1], 4);
+        -:  144:
+        -:  145:    // TEST 12: No state change occurs to the victory card piles
+        1:  146:    numTests++;
+        1:  147:    printf("\nTEST 12: No state change occurs to victory card piles\n");
+        1:  148:    printf("Estate pile unchanged: ");
+        1:  149:    assertTF(state2.supplyCount[estate], beginningState.supplyCount[estate]);
+        1:  150:    printf("Duchy pile unchanged: ");
+        1:  151:    assertTF(state2.supplyCount[duchy], beginningState.supplyCount[duchy]);
+        1:  152:    printf("Province pile unchanged: ");
+        1:  153:    assertTF(state2.supplyCount[province], beginningState.supplyCount[province]);
+        -:  154:
+        -:  155:    // TEST 13: No state change occurs to the kingdom card piles
+        1:  156:    numTests++;
+        1:  157:    printf("\nTEST 13: No state change occurs to kingdom card piles\n");
+       11:  158:    for (int x = 0; x < 10; x++) {
+       10:  159:        printf("Card %d: ", x);
+       10:  160:        assertTF(state2.supplyCount[k[x]], beginningState.supplyCount[k[x]]);
+        -:  161:    }
+        -:  162:
+        -:  163:
+        1:  164:    printf("\n----End Tests for %s----\n", TESTCARD);
+        1:  165:    printf("\nNumber of Tests Ran: %d\n", numTests);
+        -:  166:    
+        1:  167:    if (numFailedTests == 0) {
+    #####:  168:        printf("All tests for %s PASSED\n", TESTCARD);
+        -:  169:    }
+        -:  170:    else {
+        1:  171:        printf("Number of Tests Failed: %d\n", numFailedTests);
+        -:  172:    }
+        -:  173:
+        1:  174:    return 0;
+        -:  175:}

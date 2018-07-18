@@ -112,6 +112,9 @@ int main () {
     handPos = 0;
     choice1 = 0;
     choice2 = 1;
+    // give player1 a full hand before turn so attack can be observed
+    state2.handCount[player1] = 5;
+
     cardEffect(minion, choice1, choice2, choice3, &state2, handPos, &bonus);
 
     // TEST 8: Current player receives +1 action
