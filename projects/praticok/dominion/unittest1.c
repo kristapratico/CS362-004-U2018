@@ -98,17 +98,6 @@ int main () {
     state.supplyCount[curse] = 1;
     state.supplyCount[silver] = 1;
 
-    // TEST 6: Greater than 3 piles empty (five supply piles empty)
-    numTests++;
-    printf("\nTEST 6: Five supply piles empty (check > 3), game is over\n");
-    printf("Game is over: ");
-    state.supplyCount[smithy] = 0;
-    state.supplyCount[duchy] = 0;
-    state.supplyCount[copper] = 0;
-    state.supplyCount[baron] = 0;
-    state.supplyCount[mine] = 0;
-    assertTF(isGameOver(&state), gameOver);
-
 
     printf("\n----End Tests for %s----\n", TESTFUNCTION);
     printf("\nNumber of Tests Ran: %d\n", numTests);

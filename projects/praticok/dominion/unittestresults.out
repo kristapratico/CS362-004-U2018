@@ -6198,12 +6198,9 @@ Game is not over: PASSED
 TEST 5: Three non-kingdom supplies empty (victory card, treasure, curse) empty, game is over
 Game is over: PASSED
 
-TEST 6: Five supply piles empty (check > 3), game is over
-Game is over: PASSED
-
 ----End Tests for isGameOver()----
 
-Number of Tests Ran: 6
+Number of Tests Ran: 5
 Number of Tests Failed: 1
 File 'dominion.c'
 Lines executed:16.92% of 585
@@ -6635,29 +6632,29 @@ Creating 'dominion.c.gcov'
     #####:  419:  return 0;
         -:  420:}
         -:  421:
-        6:  422:int isGameOver(struct gameState *state)
+        5:  422:int isGameOver(struct gameState *state)
         -:  423:{
         -:  424:  int i;
         -:  425:  int j;
         -:  426:
         -:  427:  //if stack of Province cards is empty, the game ends
-        6:  428:  if (state->supplyCount[province] == 0)
+        5:  428:  if (state->supplyCount[province] == 0)
         -:  429:  {
         1:  430:    return 1;
         -:  431:  }
         -:  432:
         -:  433:  //if three supply pile are at 0, the game ends
-        5:  434:  j = 0;
-      130:  435:  for (i = 0; i < 25; i++)
+        4:  434:  j = 0;
+      104:  435:  for (i = 0; i < 25; i++)
         -:  436:  {
-      125:  437:    if (state->supplyCount[i] == 0)
+      100:  437:    if (state->supplyCount[i] == 0)
         -:  438:    {
-       12:  439:      j++;
+        7:  439:      j++;
         -:  440:    }
         -:  441:  }
-        5:  442:  if (j >= 3)
+        4:  442:  if (j >= 3)
         -:  443:  {
-        2:  444:    return 1;
+        1:  444:    return 1;
         -:  445:  }
         -:  446:
         3:  447:  return 0;
@@ -9251,7 +9248,7 @@ Number of actions decremented: PASSED
 Number of Tests Ran: 5
 All tests for playCard() PASSED
 File 'dominion.c'
-Lines executed:26.84% of 585
+Lines executed:27.18% of 585
 Creating 'dominion.c.gcov'
 
         -:    0:Source:dominion.c
@@ -9522,13 +9519,13 @@ Creating 'dominion.c.gcov'
         -:  261:  //check if selected card is an action
         6:  262:  if (card < adventurer || card > treasure_map)
         -:  263:  {
-        3:  264:    return -1;
+        2:  264:    return -1;
         -:  265:  }
         -:  266:
         -:  267:  //play card
-        3:  268:  if (cardEffect(card, choice1, choice2, choice3, state, handPos, &coin_bonus) < 0)
+        4:  268:  if (cardEffect(card, choice1, choice2, choice3, state, handPos, &coin_bonus) < 0)
         -:  269:  {
-    #####:  270:    return -1;
+        1:  270:    return -1;
         -:  271:  }
         -:  272:
         -:  273:  //reduce number of actions
@@ -9630,9 +9627,9 @@ Creating 'dominion.c.gcov'
     #####:  369:  return count;
         -:  370:}
         -:  371:
-        9:  372:int whoseTurn(struct gameState *state)
+       10:  372:int whoseTurn(struct gameState *state)
         -:  373:{
-        9:  374:  return state->whoseTurn;
+       10:  374:  return state->whoseTurn;
         -:  375:}
         -:  376:
     #####:  377:int endTurn(struct gameState *state)
@@ -10177,28 +10174,28 @@ Creating 'dominion.c.gcov'
         -:  916:    }
     #####:  917:}
         -:  918:
-        3:  919:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+        4:  919:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
         -:  920:{
         -:  921:  int i;
         -:  922:  int j;
         -:  923:  int k;
         -:  924:  int x;
         -:  925:  int index;
-        3:  926:  int currentPlayer = whoseTurn(state);
-        3:  927:  int nextPlayer = currentPlayer + 1;
+        4:  926:  int currentPlayer = whoseTurn(state);
+        4:  927:  int nextPlayer = currentPlayer + 1;
         -:  928:
-        3:  929:  int tributeRevealedCards[2] = {-1, -1};
+        4:  929:  int tributeRevealedCards[2] = {-1, -1};
         -:  930:  int temphand[MAX_HAND]; // moved above the if statement
-        3:  931:  int drawntreasure = 0;
+        4:  931:  int drawntreasure = 0;
         -:  932:  //int cardDrawn;
-        3:  933:  int z = 0; // this is the counter for the temp hand
-        3:  934:  if (nextPlayer > (state->numPlayers - 1))
+        4:  933:  int z = 0; // this is the counter for the temp hand
+        4:  934:  if (nextPlayer > (state->numPlayers - 1))
         -:  935:  {
     #####:  936:    nextPlayer = 0;
         -:  937:  }
         -:  938:
         -:  939:  //uses switch to select card and perform actions
-        3:  940:  switch (card)
+        4:  940:  switch (card)
         -:  941:  {
         -:  942:  case adventurer:
         2:  943:    adventurerCard(drawntreasure, handPos, state, currentPlayer, z, temphand);
@@ -10291,7 +10288,7 @@ Creating 'dominion.c.gcov'
     #####: 1030:    return 0;
         -: 1031:
         -: 1032:  case gardens:
-    #####: 1033:    return -1;
+        1: 1033:    return -1;
         -: 1034:
         -: 1035:  case mine:
     #####: 1036:    j = state->hand[currentPlayer][choice1]; //store card we will trash

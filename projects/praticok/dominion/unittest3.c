@@ -89,7 +89,7 @@ int main () {
     printf("\nTEST 4: Play Gardens to test cardEffect branch, should return -1\n");
     state.hand[player0][4] = gardens;
     printf("Play gardens (returns -1): ");
-    assertTF(playCard(5, choice1, choice2, choice3, &state), -1);
+    assertTF(playCard(4, choice1, choice2, choice3, &state), -1);
 
     // clean-up
     state.numActions = 4;
