@@ -32,53 +32,61 @@ runtests: testDrawCard
 unittestresults: cardtest1.c cardtest2.c cardtest3.c cardtest4.c unittest1.c unittest2.c unittest3.c unittest4.c dominion.c rngs.c
 	echo "Running Dominion unit tests" > unittestresults.out
 	
-	echo "cardtest1.c:" >> unittestresults.out
+	echo "cardtest1.c: smithy" >> unittestresults.out
 	gcc -o cardtest1 -g cardtest1.c dominion.c rngs.c $(CFLAGS)
 	./cardtest1 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "cardtest1.c: smithy" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "cardtest2.c:" >> unittestresults.out
+	echo "cardtest2.c: adventurer" >> unittestresults.out
 	gcc -o cardtest2 -g cardtest2.c dominion.c rngs.c $(CFLAGS)
 	./cardtest2 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "cardtest2.c: adventurer" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "cardtest3.c:" >> unittestresults.out
+	echo "cardtest3.c: minion" >> unittestresults.out
 	gcc -o cardtest3 -g cardtest3.c dominion.c rngs.c $(CFLAGS)
 	./cardtest3 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "cardtest3.c: minion" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "cardtest4.c:" >> unittestresults.out
+	echo "cardtest4.c: village" >> unittestresults.out
 	gcc -o cardtest4 -g cardtest4.c dominion.c rngs.c $(CFLAGS)
 	./cardtest4 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "cardtest4.c: village" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "unittest1.c:" >> unittestresults.out
+	echo "unittest1.c: isGameOver()" >> unittestresults.out
 	gcc -o unittest1 -g unittest1.c dominion.c rngs.c $(CFLAGS)
 	./unittest1 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "unittest1.c: isGameOver()" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "unittest2.c:" >> unittestresults.out
+	echo "unittest2.c: fullDeckCount()" >> unittestresults.out
 	gcc -o unittest2 -g unittest2.c dominion.c rngs.c $(CFLAGS)
 	./unittest2 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "unittest2.c: fullDeckCount()" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "unittest3.c:" >> unittestresults.out
+	echo "unittest3.c: playCard()" >> unittestresults.out
 	gcc -o unittest3 -g unittest3.c dominion.c rngs.c $(CFLAGS)
 	./unittest3 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "unittest3.c: playCard()" >> info.out
+	cat dominion.c.gcov >> info.out
 
-	echo "unittest4.c:" >> unittestresults.out
+	echo "unittest4.c: gainCard()" >> unittestresults.out
 	gcc -o unittest4 -g unittest4.c dominion.c rngs.c $(CFLAGS)
 	./unittest4 >> unittestresults.out
 	gcov dominion.c >> unittestresults.out
-	cat dominion.c.gcov >> unittestresults.out
+	echo "unittest4.c: gainCard()" >> info.out
+	cat dominion.c.gcov >> info.out
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
