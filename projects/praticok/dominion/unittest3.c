@@ -101,7 +101,6 @@ int main () {
     playCard(handPos, choice1, choice2, choice3, &state);
     assertTF(state.numActions, 3);
 
-
     printf("\n----End Tests for %s----\n", TESTFUNCTION);
     printf("\nNumber of Tests Ran: %d\n", numTests);
     
