@@ -46,7 +46,7 @@ int main () {
     // create a game state
     initializeGame(numPlayers, k, seed, &state);
 
-    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+    printf("\n----------------- Testing Card: %s ----------------\n", TESTCARD);
     
     // TESTING CHOICE 1
     printf("\n~~Testing Choice 1 - Gain 2 coins~~\n");

@@ -48,7 +48,7 @@ int main () {
     // create a game state
     initializeGame(numPlayers, k, seed, &state);
 
-    printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
+    printf("\n----------------- Testing Card: %s ----------------\n", TESTCARD);
     
     memcpy(&beginningState, &state, sizeof(struct gameState));
     cardEffect(adventurer, choice1, choice2, choice3, &state, handPos, &bonus);

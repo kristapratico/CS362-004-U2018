@@ -40,7 +40,7 @@ int main () {
     // create a game state
     initializeGame(numPlayers, k, seed, &state);
 
-    printf("----------------- Testing Function: %s ----------------\n", TESTFUNCTION);
+    printf("\n----------------- Testing Function: %s ----------------\n", TESTFUNCTION);
     
     // TEST 1: Game just begun, no plays happened yet
     numTests++;

@@ -80,7 +80,7 @@ int main () {
     initializeGame(numPlayers, k, seed, &state);
     memcpy(&beginningState, &state, sizeof(struct gameState));
 
-    printf("----------------- Testing Function: %s ----------------\n", TESTFUNCTION);
+    printf("\n----------------- Testing Function: %s ----------------\n", TESTFUNCTION);
     
     // TEST 1: Supply pile is empty or card does not exist in game
     numTests++;
