@@ -109,6 +109,6 @@ int main () {
     else {
         printf("Number of Tests Failed: %d\n", numFailedTests);
     }
-
+    printf("\n--------------------End Unit Tests------------------------\n");	
     return 0;
 }
