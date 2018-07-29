@@ -741,7 +741,6 @@ int getCost(int cardNumber)
 
 // Refactor: 5 cards moved from cardEffect to their own functions
 // Cards chosen: Adventurer, Smithy, Village, Minion, Tribute
-
 void adventurerCard(int drawntreasure, int handPos, struct gameState *state, int currentPlayer, int z, int temphand[]) {
     int cardDrawn;
     // bug: the player will only be able to draw 1 treasure card (instead of two) and add it to their hand
