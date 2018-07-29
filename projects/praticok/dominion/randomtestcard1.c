@@ -201,5 +201,6 @@ int main () {
     printf("TEST 6: No state change to victory card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error6), NUM_TESTS);
 
     printf("-------------------- END Random Tests for %s --------------------\n", TESTCARD);
+    
     return 0;
 }
