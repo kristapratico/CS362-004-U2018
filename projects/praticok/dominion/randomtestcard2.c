@@ -9,7 +9,7 @@
 
 #define TESTCARD "minion"
 #define DEBUG_PRINT 0
-#define NUM_TESTS 1
+#define NUM_TESTS 10000
 
 // num unqiue cards in this implementation of Dominion
 int UNIQUE_CARDS = 27;
@@ -35,7 +35,7 @@ int assertTF(int value1, int value2) {
 
 // function plays minion and then compares the pre and post game 
 // state to check for desired game behavior
-void checkMinionCard(int p, int k[], struct gameState *pre) {
+void checkMinionChoice1(int p, int k[], struct gameState *pre) {
     // state after minion card played
     struct gameState post;
     
@@ -46,26 +46,26 @@ void checkMinionCard(int p, int k[], struct gameState *pre) {
     int handPos = 0;
     post.hand[p][handPos] = minion;
     int choice1, choice2, choice3;
-    choice1 = 0;
+    choice1 = 1;
     choice2 = 0;
     choice3 = 0;
     int bonus = rand() % 5;
 
     // variables that hold game behavior: 0 = correct behavior and 1 = incorrect behavior
-    int checkHandCount, isCardPlayed, isCardFromOwnPile, stateChangePlyr, stateChangeKing, stateChangeVictory;
-    checkHandCount = isCardPlayed = isCardFromOwnPile = stateChangePlyr = stateChangeKing = stateChangeVictory = 0;
+    int checkActionCount, isCardPlayed, gainedCoins, stateChangePlyr, stateChangeKing, stateChangeVictory;
+    checkActionCount = isCardPlayed = gainedCoins = stateChangePlyr = stateChangeKing = stateChangeVictory = 0;
     
     // call cardEffect with minion
     cardEffect(minion, choice1, choice2, choice3, &post, handPos, &bonus);
     
-    // check if player's handcount increases by 2 (+3 cards - discard)
-    checkHandCount = assertTF(pre->handCount[p] + 3 - 1, post.handCount[p]);
+    // Player receives +1 action
+    checkActionCount = assertTF(pre->numActions + 1, post.numActions);
     
     // check if played card count is incremented
     isCardPlayed = assertTF(pre->playedCardCount + 1, post.playedCardCount);
     
-    // check if +3 cards are gained from the player's own pile
-    isCardFromOwnPile = assertTF(pre->deckCount[p] - 3, post.deckCount[p]);
+    // check if player gains +2 coins
+    gainedCoins = assertTF(pre->coins + 2, post.coins);
     
     // no state change to other players
     for(int y = 0; y < post.numPlayers; y++) {
@@ -92,11 +92,11 @@ void checkMinionCard(int p, int k[], struct gameState *pre) {
     }
     
     // check for errors and increment counters
-    if(checkHandCount)
+    if(checkActionCount)
         error1++;
     if(isCardPlayed)
         error2++;
-    if(isCardFromOwnPile)
+    if(gainedCoins)
         error3++;
     if(stateChangePlyr)
         error4++;
@@ -107,14 +107,14 @@ void checkMinionCard(int p, int k[], struct gameState *pre) {
 
     // if DEBUG_PRINT true, print the game state for troubleshooting
     if (DEBUG_PRINT) {
-        if (checkHandCount || isCardPlayed || isCardFromOwnPile || stateChangePlyr
+        if (checkActionCount || isCardPlayed || gainedCoins || stateChangePlyr
             || stateChangeKing || stateChangeVictory) {
             printGameState(&post);
         }
     }
 }
 
-// randomize the game state before calling smithyCard
+// randomize the game state before calling minionCard
 // returns player to be tested 
 int randomize(struct gameState *state, int k[]) {
     // random num of players and randomly select player
@@ -125,15 +125,16 @@ int randomize(struct gameState *state, int k[]) {
 
     // randomize deck, discard, and hand counts
     state->deckCount[plyr] = rand() % MAX_DECK;
-    state->discardCount[plyr] = rand() % MAX_DECK;
-    state->handCount[plyr] = rand() % 5;
+    state->discardCount[plyr] = 0;
+    state->handCount[plyr] = rand() % 5 + 1;
     state->playedCardCount = 0; 
+    state->numActions = rand() % 5 + 1;
+    state->coins = rand() % 5 + 1;
 
-    // fill deck, discard, and hand with random cards
+    // fill deck and hand with random cards
     for (int i = 0; i < state->deckCount[plyr]; i++)
 	    state->deck[plyr][i] = rand() % UNIQUE_CARDS;
-    for (int i = 0; i < state->discardCount[plyr]; i++)
-	    state->discard[plyr][i] = rand() % UNIQUE_CARDS;
+
     for (int i = 0; i < state->handCount[plyr]; i++)
 	    state->hand[plyr][i] = rand() % UNIQUE_CARDS;
     
@@ -152,6 +153,7 @@ int randomize(struct gameState *state, int k[]) {
 // For Debugging when a test case fails
 void printGameState(struct gameState *state) {
     printf("Number of Players: %d\n", state->numPlayers);
+    printf("Player we're testing: %d\n", state->whoseTurn);
     printf("Played Card Count: %d\n", state->playedCardCount);
     printf("Supply Count: \n");
     for(int i = 0; i < 27; i++) {
@@ -183,22 +185,32 @@ int main () {
     for(int x = 0; x < NUM_TESTS; x++) {
         struct gameState state;
         player = randomize(&state, k);
-        checkSmithyCard(player, k, &state);
-    }
-
-    if (error1 == 0 && error2 == 0 && error3 == 0 &&
-        error4 == 0 && error5 == 0 && error6 == 0) {
-        printf("\nAll tests successfully PASSED\n");
+        checkMinionChoice1(player, k, &state);
     }
 
     printf("\n-------------------- START Random Tests for %s --------------------\n", TESTCARD);
-
-    printf("\nTEST 1: Player gains +3 cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error1), NUM_TESTS);
+    printf("\n----------------- %s: CHOICE 1 -----------------\n", TESTCARD);
+    printf("\nTEST 1: Player gains +1 action \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error1), NUM_TESTS);
     printf("TEST 2: Card is marked as played \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error2), NUM_TESTS);
-    printf("TEST 3: Cards come from player's own pile \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error3), NUM_TESTS);
+    printf("TEST 3: Player gains +2 coins \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error3), NUM_TESTS);
     printf("TEST 4: No state change to other player(s) \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error4), NUM_TESTS);
     printf("TEST 5: No state change to kingdom card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error5), NUM_TESTS);
     printf("TEST 6: No state change to victory card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error6), NUM_TESTS);
+
+    if (error1 == 0 && error2 == 0 && error3 == 0 &&
+        error4 == 0 && error5 == 0 && error6 == 0) {
+        printf("All tests successfully PASSED\n\n");
+    }
+
+    // set error counters back to 0 for minion choice 2
+    error1 = error2 = error3 = error4 = error5 = error6 = 0;
+
+    for(int x = 0; x < NUM_TESTS; x++) {
+        struct gameState state;
+        player = randomize(&state, k);
+        checkMinionChoice2(player, k, &state);
+    }
+
 
     printf("-------------------- END Random Tests for %s --------------------\n", TESTCARD);
     

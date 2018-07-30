@@ -115,7 +115,7 @@ void checkAdventurerCard(int p, int k[], struct gameState *pre) {
     }
     
     // check for errors and increment counters
-    if(checkHandCount)
+    if(DEBUG_PRINT)
         error1++;
     if(isCardPlayed)
         error2++;
@@ -212,10 +212,6 @@ int main () {
         checkAdventurerCard(player, k, &state);
     }
 
-    if (error1 == 0 && error2 == 0 && error3 == 0 &&
-        error4 == 0 && error5 == 0 && error6 == 0) {
-        printf("\nAll tests successfully PASSED\n");
-    }
 
     printf("\n-------------------- START Random Tests for %s --------------------\n", TESTCARD);
 
@@ -225,6 +221,11 @@ int main () {
     printf("TEST 4: No state change to other player(s) \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error4), NUM_TESTS);
     printf("TEST 5: No state change to kingdom card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error5), NUM_TESTS);
     printf("TEST 6: No state change to victory card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error6), NUM_TESTS);
+
+    if (error1 == 0 && error2 == 0 && error3 == 0 &&
+        error4 == 0 && error5 == 0 && error6 == 0) {
+        printf("\nAll tests successfully PASSED\n");
+    }
 
     printf("-------------------- END Random Tests for %s --------------------\n", TESTCARD);
     

@@ -9,7 +9,7 @@
 
 #define TESTCARD "smithy"
 #define DEBUG_PRINT 0
-#define NUM_TESTS 2000
+#define NUM_TESTS 100
 
 // num unqiue cards in this implementation of Dominion
 int UNIQUE_CARDS = 27;
@@ -126,7 +126,7 @@ int randomize(struct gameState *state, int k[]) {
     // randomize deck, discard, and hand counts
     state->deckCount[plyr] = rand() % MAX_DECK;
     state->discardCount[plyr] = rand() % MAX_DECK;
-    state->handCount[plyr] = rand() % 5;
+    state->handCount[plyr] = rand() % 5 + 1;
     state->playedCardCount = 0; 
 
     // fill deck, discard, and hand with random cards
@@ -152,6 +152,7 @@ int randomize(struct gameState *state, int k[]) {
 // For Debugging when a test case fails
 void printGameState(struct gameState *state) {
     printf("Number of Players: %d\n", state->numPlayers);
+    printf("Player we're testing: %d\n", state->whoseTurn);
     printf("Played Card Count: %d\n", state->playedCardCount);
     printf("Supply Count: \n");
     for(int i = 0; i < 27; i++) {
@@ -186,19 +187,18 @@ int main () {
         checkSmithyCard(player, k, &state);
     }
 
-    if (error1 == 0 && error2 == 0 && error3 == 0 &&
-        error4 == 0 && error5 == 0 && error6 == 0) {
-        printf("\nAll tests successfully PASSED\n");
-    }
-
     printf("\n-------------------- START Random Tests for %s --------------------\n", TESTCARD);
-
     printf("\nTEST 1: Player gains +3 cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error1), NUM_TESTS);
     printf("TEST 2: Card is marked as played \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error2), NUM_TESTS);
     printf("TEST 3: Cards come from player's own pile \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error3), NUM_TESTS);
     printf("TEST 4: No state change to other player(s) \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error4), NUM_TESTS);
     printf("TEST 5: No state change to kingdom card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error5), NUM_TESTS);
     printf("TEST 6: No state change to victory card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error6), NUM_TESTS);
+
+    if (error1 == 0 && error2 == 0 && error3 == 0 &&
+        error4 == 0 && error5 == 0 && error6 == 0) {
+        printf("\nAll tests successfully PASSED\n");
+    }
 
     printf("-------------------- END Random Tests for %s --------------------\n", TESTCARD);
     
