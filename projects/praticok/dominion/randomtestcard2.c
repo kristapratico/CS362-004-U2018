@@ -3,14 +3,13 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include <math.h>
 #include <assert.h>
 #include "rngs.h"
 #include <stdlib.h>
 
-#define TESTCARD "adventurer"
+#define TESTCARD "minion"
 #define DEBUG_PRINT 0
-#define NUM_TESTS 10000
+#define NUM_TESTS 1
 
 // num unqiue cards in this implementation of Dominion
 int UNIQUE_CARDS = 27;
@@ -34,71 +33,49 @@ int assertTF(int value1, int value2) {
         return 1;
 }
 
-// function plays adventurer and then compares the pre and post game 
+// function plays minion and then compares the pre and post game 
 // state to check for desired game behavior
-void checkAdventurerCard(int p, int k[], struct gameState *pre) {
-    // state after adventurer card played
+void checkMinionCard(int p, int k[], struct gameState *pre) {
+    // state after minion card played
     struct gameState post;
     
     // copy the randomized state to post
     memcpy(&post, pre, sizeof(struct gameState));
 
-    // place adventurer in hand and randomize other cardEffect arguments
+    // place minion in hand and randomize other cardEffect arguments
     int handPos = 0;
-    post.hand[p][handPos] = adventurer;
+    post.hand[p][handPos] = minion;
     int choice1, choice2, choice3;
-    choice1 = rand() % 5;
-    choice2 = rand() % 5;
-    choice3 = rand() % 5;
+    choice1 = 0;
+    choice2 = 0;
+    choice3 = 0;
     int bonus = rand() % 5;
 
-    // vars for checking for treasure cards added to hand
-    int isTreasure = 0;
-    int numOriginalTreasures = 0;
-    int currentNumTreasures = 0;
-
     // variables that hold game behavior: 0 = correct behavior and 1 = incorrect behavior
-    int checkHandCount, isCardPlayed, isTreasureCards, stateChangePlyr, stateChangeKing, stateChangeVictory;
-    checkHandCount = isCardPlayed = isTreasureCards = stateChangePlyr = stateChangeKing = stateChangeVictory = 0;
+    int checkHandCount, isCardPlayed, isCardFromOwnPile, stateChangePlyr, stateChangeKing, stateChangeVictory;
+    checkHandCount = isCardPlayed = isCardFromOwnPile = stateChangePlyr = stateChangeKing = stateChangeVictory = 0;
     
-    // call cardEffect with adventurer
-    cardEffect(adventurer, choice1, choice2, choice3, &post, handPos, &bonus);
+    // call cardEffect with minion
+    cardEffect(minion, choice1, choice2, choice3, &post, handPos, &bonus);
     
-    // check if player's handcount increases by 1 (+2 cards - discard)
-    checkHandCount = assertTF(pre->handCount[p] + 2 - 1, post.handCount[p]);
+    // check if player's handcount increases by 2 (+3 cards - discard)
+    checkHandCount = assertTF(pre->handCount[p] + 3 - 1, post.handCount[p]);
     
     // check if played card count is incremented
     isCardPlayed = assertTF(pre->playedCardCount + 1, post.playedCardCount);
     
-    // check if cards gained by player are treasure cards
-    for (int x = 0; x < pre->handCount[p]; x++) {
-        isTreasure = pre->hand[p][x];
-        if(isTreasure == copper || isTreasure == silver || isTreasure == gold) {
-            numOriginalTreasures++;
-        }
-    }
-    numOriginalTreasures = numOriginalTreasures + 2; 
-
-    for (int x = 0; x < post.handCount[p]; x++) {
-        isTreasure = post.hand[p][x];
-        if(isTreasure == copper || isTreasure == silver || isTreasure == gold) {
-            currentNumTreasures++;
-        }
-    }
-    if(currentNumTreasures != numOriginalTreasures) 
-        isTreasureCards = 1;
-
+    // check if +3 cards are gained from the player's own pile
+    isCardFromOwnPile = assertTF(pre->deckCount[p] - 3, post.deckCount[p]);
+    
     // no state change to other players
     for(int y = 0; y < post.numPlayers; y++) {
-        if (y == post.whoseTurn) {
-            continue;
-        }
-        if (pre->handCount[y] != post.handCount[y])
-            stateChangePlyr = 1;                        
+        if (y == post.whoseTurn) continue;
+        if (pre->handCount[y] != post.handCount[y]) 
+            stateChangePlyr = 1;               
         if (pre->deckCount[y] != post.deckCount[y]) 
-            stateChangePlyr = 1;
-        if (pre->discardCount[y] != post.discardCount[y])
-            stateChangePlyr = 1;                       
+            stateChangePlyr = 1;         
+        if (pre->discardCount[y] != post.discardCount[y]) 
+            stateChangePlyr = 1;         
     }
     // no state change occurs to victory card piles
     if (pre->supplyCount[estate] != post.supplyCount[estate]) 
@@ -119,7 +96,7 @@ void checkAdventurerCard(int p, int k[], struct gameState *pre) {
         error1++;
     if(isCardPlayed)
         error2++;
-    if(isTreasureCards)
+    if(isCardFromOwnPile)
         error3++;
     if(stateChangePlyr)
         error4++;
@@ -129,15 +106,15 @@ void checkAdventurerCard(int p, int k[], struct gameState *pre) {
         error6++;
 
     // if DEBUG_PRINT true, print the game state for troubleshooting
-    if (stateChangePlyr) {
-        if (checkHandCount || isCardPlayed || isTreasureCards || stateChangePlyr
+    if (DEBUG_PRINT) {
+        if (checkHandCount || isCardPlayed || isCardFromOwnPile || stateChangePlyr
             || stateChangeKing || stateChangeVictory) {
             printGameState(&post);
         }
     }
 }
 
-// randomize the game state before calling adventurerCard
+// randomize the game state before calling smithyCard
 // returns player to be tested 
 int randomize(struct gameState *state, int k[]) {
     // random num of players and randomly select player
@@ -147,23 +124,21 @@ int randomize(struct gameState *state, int k[]) {
     state->whoseTurn = plyr;
 
     // randomize deck, discard, and hand counts
-    state->deckCount[plyr] = rand() % (MAX_DECK - 4 + 1) + 3;
-    state->discardCount[plyr] = 0;
-    state->handCount[plyr] = rand() % (MAX_HAND - 4 + 1) + 3;
-    state->playedCardCount = 0;
+    state->deckCount[plyr] = rand() % MAX_DECK;
+    state->discardCount[plyr] = rand() % MAX_DECK;
+    state->handCount[plyr] = rand() % 5;
+    state->playedCardCount = 0; 
 
     // fill deck, discard, and hand with random cards
     for (int i = 0; i < state->deckCount[plyr]; i++)
-        state->deck[plyr][i] = rand() % UNIQUE_CARDS;
-    state->deck[plyr][state->deckCount[plyr]-2] = copper;
-    state->deck[plyr][state->deckCount[plyr]-3] = copper;
-    state->deck[plyr][state->deckCount[plyr]-4] = copper;
-
+	    state->deck[plyr][i] = rand() % UNIQUE_CARDS;
+    for (int i = 0; i < state->discardCount[plyr]; i++)
+	    state->discard[plyr][i] = rand() % UNIQUE_CARDS;
     for (int i = 0; i < state->handCount[plyr]; i++)
-        state->hand[plyr][i] = rand() % UNIQUE_CARDS;
-
+	    state->hand[plyr][i] = rand() % UNIQUE_CARDS;
+    
     // initialize supply counts for victory and kingdom card
-    // piles. Will check that these do not change after adventurer
+    // piles. Will check that these do not change after minion
     // is played.
     for (int x = 0; x < 10; x++)
         state->supplyCount[k[x]] = 10;
@@ -177,7 +152,6 @@ int randomize(struct gameState *state, int k[]) {
 // For Debugging when a test case fails
 void printGameState(struct gameState *state) {
     printf("Number of Players: %d\n", state->numPlayers);
-    printf("Player we're testing: %d\n", state->whoseTurn);
     printf("Played Card Count: %d\n", state->playedCardCount);
     printf("Supply Count: \n");
     for(int i = 0; i < 27; i++) {
@@ -203,13 +177,13 @@ int main () {
 
     // kingdom cards in use
     int k[10] = {adventurer, minion, feast, gardens, mine,
-               tribute, adventurer, village, baron, council_room};
+               tribute, minion, village, baron, council_room};
     int player;
 
     for(int x = 0; x < NUM_TESTS; x++) {
         struct gameState state;
         player = randomize(&state, k);
-        checkAdventurerCard(player, k, &state);
+        checkSmithyCard(player, k, &state);
     }
 
     if (error1 == 0 && error2 == 0 && error3 == 0 &&
@@ -219,9 +193,9 @@ int main () {
 
     printf("\n-------------------- START Random Tests for %s --------------------\n", TESTCARD);
 
-    printf("\nTEST 1: Player gains +2 cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error1), NUM_TESTS);
+    printf("\nTEST 1: Player gains +3 cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error1), NUM_TESTS);
     printf("TEST 2: Card is marked as played \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error2), NUM_TESTS);
-    printf("TEST 3: Cards gained by player are treasure cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error3), NUM_TESTS);
+    printf("TEST 3: Cards come from player's own pile \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error3), NUM_TESTS);
     printf("TEST 4: No state change to other player(s) \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error4), NUM_TESTS);
     printf("TEST 5: No state change to kingdom card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error5), NUM_TESTS);
     printf("TEST 6: No state change to victory card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error6), NUM_TESTS);
