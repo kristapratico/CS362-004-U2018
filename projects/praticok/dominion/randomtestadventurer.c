@@ -146,15 +146,17 @@ int randomize(struct gameState *state, int k[]) {
     int plyr = rand() % players;
     state->whoseTurn = plyr;
 
-    // randomize deck, discard, and hand counts
+    // randomize deck and hand counts
     state->deckCount[plyr] = rand() % (MAX_DECK - 4 + 1) + 3;
     state->discardCount[plyr] = 0;
     state->handCount[plyr] = rand() % (MAX_HAND - 4 + 1) + 3;
     state->playedCardCount = 0;
 
-    // fill deck, discard, and hand with random cards
+    // fill deck and hand with random cards
     for (int i = 0; i < state->deckCount[plyr]; i++)
         state->deck[plyr][i] = rand() % UNIQUE_CARDS;
+    
+    // place at least 3 treasure cards in deck
     state->deck[plyr][state->deckCount[plyr]-2] = copper;
     state->deck[plyr][state->deckCount[plyr]-3] = copper;
     state->deck[plyr][state->deckCount[plyr]-4] = copper;
@@ -206,6 +208,7 @@ int main () {
                tribute, adventurer, village, baron, council_room};
     int player;
 
+    // loop runs NUM TESTS
     for(int x = 0; x < NUM_TESTS; x++) {
         struct gameState state;
         player = randomize(&state, k);
@@ -214,7 +217,6 @@ int main () {
 
 
     printf("\n-------------------- START Random Tests for %s --------------------\n", TESTCARD);
-
     printf("\nTEST 1: Player gains +2 cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error1), NUM_TESTS);
     printf("TEST 2: Card is marked as played \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error2), NUM_TESTS);
     printf("TEST 3: Cards gained by player are treasure cards \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error3), NUM_TESTS);

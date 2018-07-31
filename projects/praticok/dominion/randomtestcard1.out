@@ -194,18 +194,18 @@ Creating 'dominion.c.gcov'
         -:    5:#include <math.h>
         -:    6:#include <stdlib.h>
         -:    7:
-function compare called 3190 returned 100% blocks executed 100%
-     3190:    8:int compare(const void *a, const void *b)
+function compare called 1803 returned 100% blocks executed 100%
+     1803:    8:int compare(const void *a, const void *b)
         -:    9:{
-     3190:   10:  if (*(int *)a > *(int *)b)
-branch  0 taken 50% (fallthrough)
-branch  1 taken 50%
-     1588:   11:    return 1;
-     1602:   12:  if (*(int *)a < *(int *)b)
-branch  0 taken 42% (fallthrough)
-branch  1 taken 58%
-      674:   13:    return -1;
-      928:   14:  return 0;
+     1803:   10:  if (*(int *)a > *(int *)b)
+branch  0 taken 51% (fallthrough)
+branch  1 taken 49%
+      922:   11:    return 1;
+      881:   12:  if (*(int *)a < *(int *)b)
+branch  0 taken 46% (fallthrough)
+branch  1 taken 54%
+      406:   13:    return -1;
+      475:   14:  return 0;
         -:   15:}
         -:   16:
 function newGame called 0 returned 0% blocks executed 0%
@@ -470,28 +470,28 @@ branch  1 taken 100%
 call    0 returned 100%
         -:  219:  /* SORT CARDS IN DECK TO ENSURE DETERMINISM! */
         -:  220:
-      430:  221:  while (state->deckCount[player] > 0)
+      268:  221:  while (state->deckCount[player] > 0)
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
         -:  222:  {
-      428:  223:    card = floor(Random() * state->deckCount[player]);
+      266:  223:    card = floor(Random() * state->deckCount[player]);
 call    0 returned 100%
-      428:  224:    newDeck[newDeckPos] = state->deck[player][card];
-      428:  225:    newDeckPos++;
-    47389:  226:    for (i = card; i < state->deckCount[player] - 1; i++)
+      266:  224:    newDeck[newDeckPos] = state->deck[player][card];
+      266:  225:    newDeckPos++;
+    18615:  226:    for (i = card; i < state->deckCount[player] - 1; i++)
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
         -:  227:    {
-    46961:  228:      state->deck[player][i] = state->deck[player][i + 1];
+    18349:  228:      state->deck[player][i] = state->deck[player][i + 1];
         -:  229:    }
-      428:  230:    state->deckCount[player]--;
+      266:  230:    state->deckCount[player]--;
         -:  231:  }
-      429:  232:  for (i = 0; i < newDeckPos; i++)
+      267:  232:  for (i = 0; i < newDeckPos; i++)
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
         -:  233:  {
-      428:  234:    state->deck[player][i] = newDeck[i];
-      428:  235:    state->deckCount[player]++;
+      266:  234:    state->deck[player][i] = newDeck[i];
+      266:  235:    state->deckCount[player]++;
         -:  236:  }
         -:  237:
         1:  238:  return 0;
@@ -1017,12 +1017,12 @@ branch  1 taken 99%
         -:  621:    //Step 1 Shuffle the discard pile back into a deck
         -:  622:    int i;
         -:  623:    //Move discard to deck
-      429:  624:    for (i = 0; i < state->discardCount[player]; i++)
+      267:  624:    for (i = 0; i < state->discardCount[player]; i++)
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
         -:  625:    {
-      428:  626:      state->deck[player][i] = state->discard[player][i];
-      428:  627:      state->discard[player][i] = -1;
+      266:  626:      state->deck[player][i] = state->discard[player][i];
+      266:  627:      state->discard[player][i] = -1;
         -:  628:    }
         -:  629:
         1:  630:    state->deckCount[player] = state->discardCount[player];
@@ -1445,10 +1445,10 @@ call    0 returned 100%
         -:  931:  //int cardDrawn;
       100:  932:  int z = 0; // this is the counter for the temp hand
       100:  933:  if (nextPlayer > (state->numPlayers - 1))
-branch  0 taken 37% (fallthrough)
-branch  1 taken 63%
+branch  0 taken 34% (fallthrough)
+branch  1 taken 66%
         -:  934:  {
-       37:  935:    nextPlayer = 0;
+       34:  935:    nextPlayer = 0;
         -:  936:  }
         -:  937:
         -:  938:  //uses switch to select card and perform actions

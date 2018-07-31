@@ -181,6 +181,7 @@ int main () {
                tribute, smithy, village, baron, council_room};
     int player;
 
+    // loop for NUM TESTS
     for(int x = 0; x < NUM_TESTS; x++) {
         struct gameState state;
         player = randomize(&state, k);

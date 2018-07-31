@@ -75,7 +75,7 @@ void checkMinionChoice(int p, int k[], struct gameState *pre, int choice1, int c
         // check if player received 4 cards from his own pile
         fromOwnPile = assertTF(pre->deckCount[p] - 4, post.deckCount[p]);
 
-        // check that players with > 5 cards discard down to 4
+        // check that players with at least 5 cards discard down to 4
         for (int x = 0; x < post.numPlayers; x++) {
             if (x == post.whoseTurn) continue;
             if (pre->handCount[x] >= 5) {
@@ -235,7 +235,7 @@ int main () {
     printf("TEST 6: No state change to victory card piles \n\tCases Passed: %d/%d\n\n", (NUM_TESTS - error9), NUM_TESTS);
 
     if (error1 == 0 && error2 == 0 && error3 == 0 &&
-        error7 == 0 && error8 == 0 && error8 == 0) {
+        error7 == 0 && error8 == 0 && error9 == 0) {
         printf("All tests for CHOICE 1 successfully PASSED\n\n");
     }
 
