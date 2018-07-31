@@ -1,16 +1,14 @@
 
--------------------- START Random Tests for minion --------------------
+-------------------- START Random Tests for adventurer --------------------
 
------------------ minion: CHOICE 1 -----------------
-
-TEST 1: Player gains +1 action 
+TEST 1: Player gains +2 cards 
 	Cases Passed: 10000/10000
 
 TEST 2: Card is marked as played 
-	Cases Passed: 10000/10000
+	Cases Passed: 0/10000
 
-TEST 3: Player gains +2 coins 
-	Cases Passed: 10000/10000
+TEST 3: Cards gained by player are treasure cards 
+	Cases Passed: 0/10000
 
 TEST 4: No state change to other player(s) 
 	Cases Passed: 10000/10000
@@ -21,33 +19,7 @@ TEST 5: No state change to kingdom card piles
 TEST 6: No state change to victory card piles 
 	Cases Passed: 10000/10000
 
-All tests for CHOICE 1 successfully PASSED
-
-
------------------ minion: CHOICE 2 -----------------
-
-TEST 1: Player gains +1 action 
-	Cases Passed: 10000/10000
-
-TEST 2: Card is marked as played 
-	Cases Passed: 1295/10000
-
-TEST 3: Player discards down to 4 cards in hand 
-	Cases Passed: 10000/10000
-
-TEST 4: Player draws cards from his own pile 
-	Cases Passed: 10000/10000
-
-TEST 5: All other players with at least 5 cards discards hand and draws 4 
-	Cases Passed: 6556/10000
-
-TEST 6: No state change to kingdom card piles 
-	Cases Passed: 10000/10000
-
-TEST 7: No state change to victory card piles 
-	Cases Passed: 10000/10000
-
--------------------- END Random Tests for minion --------------------
+-------------------- END Random Tests for adventurer --------------------
 Function 'updateCoins'
 Lines executed:0.00% of 11
 Branches executed:0.00% of 8
@@ -67,10 +39,10 @@ Taken at least once:66.67% of 6
 No calls
 
 Function 'cardEffect'
-Lines executed:7.39% of 176
+Lines executed:8.52% of 176
 Branches executed:16.79% of 137
-Taken at least once:2.92% of 137
-Calls executed:5.56% of 54
+Taken at least once:3.65% of 137
+Calls executed:7.41% of 54
 
 Function 'tributeCard'
 Lines executed:0.00% of 33
@@ -96,10 +68,10 @@ Taken at least once:100.00% of 2
 Calls executed:100.00% of 2
 
 Function 'adventurerCard'
-Lines executed:0.00% of 15
-Branches executed:0.00% of 12
-Taken at least once:0.00% of 12
-Calls executed:0.00% of 2
+Lines executed:93.33% of 15
+Branches executed:100.00% of 12
+Taken at least once:91.67% of 12
+Calls executed:50.00% of 2
 
 Function 'getCost'
 Lines executed:0.00% of 30
@@ -204,17 +176,17 @@ Taken at least once:100.00% of 4
 No calls
 
 File 'dominion.c'
-Lines executed:16.07% of 585
-Branches executed:16.07% of 417
-Taken at least once:10.31% of 417
-Calls executed:15.79% of 95
+Lines executed:18.80% of 585
+Branches executed:18.94% of 417
+Taken at least once:13.19% of 417
+Calls executed:17.89% of 95
 Creating 'dominion.c.gcov'
 
         -:    0:Source:dominion.c
         -:    0:Graph:dominion.gcno
         -:    0:Data:dominion.gcda
-        -:    0:Runs:2
-        -:    0:Programs:2
+        -:    0:Runs:3
+        -:    0:Programs:3
         -:    1:#include "dominion.h"
         -:    2:#include "dominion_helpers.h"
         -:    3:#include "rngs.h"
@@ -699,10 +671,10 @@ branch  1 never executed
     #####:  369:  return count;
         -:  370:}
         -:  371:
-function whoseTurn called 49996 returned 100% blocks executed 100%
-    49996:  372:int whoseTurn(struct gameState *state)
+function whoseTurn called 59996 returned 100% blocks executed 100%
+    59996:  372:int whoseTurn(struct gameState *state)
         -:  373:{
-    49996:  374:  return state->whoseTurn;
+    59996:  374:  return state->whoseTurn;
         -:  375:}
         -:  376:
 function endTurn called 0 returned 0% blocks executed 0%
@@ -1032,12 +1004,12 @@ branch  1 never executed
     #####:  611:  return 0;
         -:  612:}
         -:  613:
-function drawCard called 56356 returned 100% blocks executed 92%
-    56356:  614:int drawCard(int player, struct gameState *state)
+function drawCard called 75292 returned 100% blocks executed 92%
+    75292:  614:int drawCard(int player, struct gameState *state)
         -:  615:{
         -:  616:  int count;
         -:  617:  int deckCounter;
-    56356:  618:  if (state->deckCount[player] <= 0)
+    75292:  618:  if (state->deckCount[player] <= 0)
 branch  0 taken 1% (fallthrough)
 branch  1 taken 99%
         -:  619:  { //Deck is empty
@@ -1089,20 +1061,20 @@ branch  1 taken 100%
         -:  660:
         -:  661:  else
         -:  662:  {
-    56355:  663:    int count = state->handCount[player]; //Get current hand count for player
+    75291:  663:    int count = state->handCount[player]; //Get current hand count for player
         -:  664:    int deckCounter;
         -:  665:    if (DEBUG)
         -:  666:    { //Debug statements
         -:  667:      printf("Current hand count: %d\n", count);
         -:  668:    }
         -:  669:
-    56355:  670:    deckCounter = state->deckCount[player];                            //Create holder for the deck count
-    56355:  671:    state->hand[player][count] = state->deck[player][deckCounter - 1]; //Add card to the hand
-    56355:  672:    state->deckCount[player]--;
-    56355:  673:    state->handCount[player]++; //Increment hand count
+    75291:  670:    deckCounter = state->deckCount[player];                            //Create holder for the deck count
+    75291:  671:    state->hand[player][count] = state->deck[player][deckCounter - 1]; //Add card to the hand
+    75291:  672:    state->deckCount[player]--;
+    75291:  673:    state->handCount[player]++; //Increment hand count
         -:  674:  }
         -:  675:
-    56356:  676:  return 0;
+    75292:  676:  return 0;
         -:  677:}
         -:  678:
 function getCost called 0 returned 0% blocks executed 0%
@@ -1199,47 +1171,47 @@ branch 27 never executed
         -:  741:
         -:  742:// Refactor: 5 cards moved from cardEffect to their own functions
         -:  743:// Cards chosen: Adventurer, Smithy, Village, Minion, Tribute
-function adventurerCard called 0 returned 0% blocks executed 0%
-    #####:  744:void adventurerCard(int drawntreasure, int handPos, struct gameState *state, int currentPlayer, int z, int temphand[]) {
+function adventurerCard called 10000 returned 100% blocks executed 93%
+    10000:  744:void adventurerCard(int drawntreasure, int handPos, struct gameState *state, int currentPlayer, int z, int temphand[]) {
         -:  745:    int cardDrawn;
         -:  746:    // bug: the player will only be able to draw 1 treasure card (instead of two) and add it to their hand
-    #####:  747:    while (drawntreasure < 1)
-branch  0 never executed
-branch  1 never executed
+    38936:  747:    while (drawntreasure < 1)
+branch  0 taken 65%
+branch  1 taken 35% (fallthrough)
         -:  748:    {
-    #####:  749:      if (state->deckCount[currentPlayer] < 1)
-branch  0 never executed
-branch  1 never executed
+    18936:  749:      if (state->deckCount[currentPlayer] < 1)
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
         -:  750:      { //if the deck is empty we need to shuffle discard and add to deck
     #####:  751:        shuffle(currentPlayer, state);
 call    0 never executed
         -:  752:      }
-    #####:  753:      drawCard(currentPlayer, state);
-call    0 never executed
-    #####:  754:      cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1]; //top card of hand is most recently drawn card.
-    #####:  755:      if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-branch  0 never executed
-branch  1 never executed
-branch  2 never executed
-branch  3 never executed
-branch  4 never executed
-branch  5 never executed
-    #####:  756:        drawntreasure++;
+    18936:  753:      drawCard(currentPlayer, state);
+call    0 returned 100%
+    18936:  754:      cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer] - 1]; //top card of hand is most recently drawn card.
+    18936:  755:      if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+branch  0 taken 51% (fallthrough)
+branch  1 taken 49%
+branch  2 taken 96% (fallthrough)
+branch  3 taken 4%
+branch  4 taken 4% (fallthrough)
+branch  5 taken 96%
+    10000:  756:        drawntreasure++;
         -:  757:      else
         -:  758:      {
-    #####:  759:        temphand[z] = cardDrawn;
-    #####:  760:        state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-    #####:  761:        z++;
+     8936:  759:        temphand[z] = cardDrawn;
+     8936:  760:        state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+     8936:  761:        z++;
         -:  762:      }
         -:  763:    }
-    #####:  764:    while (z - 1 >= 0)
-branch  0 never executed
-branch  1 never executed
+    28936:  764:    while (z - 1 >= 0)
+branch  0 taken 47%
+branch  1 taken 53% (fallthrough)
         -:  765:    {
-    #####:  766:      state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; // discard all cards in play that have been drawn
-    #####:  767:      z = z - 1;
+     8936:  766:      state->discard[currentPlayer][state->discardCount[currentPlayer]++] = temphand[z - 1]; // discard all cards in play that have been drawn
+     8936:  767:      z = z - 1;
         -:  768:    }
-    #####:  769:}
+    10000:  769:}
         -:  770:
 function smithyCard called 100 returned 100% blocks executed 100%
       100:  771:void smithyCard(int handPos, struct gameState *state, int currentPlayer) {
@@ -1455,33 +1427,33 @@ call    0 never executed
         -:  915:    }
     #####:  916:}
         -:  917:
-function cardEffect called 20100 returned 100% blocks executed 5%
-    20100:  918:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
+function cardEffect called 30100 returned 100% blocks executed 6%
+    30100:  918:int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
         -:  919:{
         -:  920:  int i;
         -:  921:  int j;
         -:  922:  int k;
         -:  923:  int x;
         -:  924:  int index;
-    20100:  925:  int currentPlayer = whoseTurn(state);
+    30100:  925:  int currentPlayer = whoseTurn(state);
 call    0 returned 100%
-    20100:  926:  int nextPlayer = currentPlayer + 1;
+    30100:  926:  int nextPlayer = currentPlayer + 1;
         -:  927:
-    20100:  928:  int tributeRevealedCards[2] = {-1, -1};
+    30100:  928:  int tributeRevealedCards[2] = {-1, -1};
         -:  929:  int temphand[MAX_HAND]; // moved above the if statement
-    20100:  930:  int drawntreasure = 0;
+    30100:  930:  int drawntreasure = 0;
         -:  931:  //int cardDrawn;
-    20100:  932:  int z = 0; // this is the counter for the temp hand
-    20100:  933:  if (nextPlayer > (state->numPlayers - 1))
+    30100:  932:  int z = 0; // this is the counter for the temp hand
+    30100:  933:  if (nextPlayer > (state->numPlayers - 1))
 branch  0 taken 36% (fallthrough)
 branch  1 taken 64%
         -:  934:  {
-     7237:  935:    nextPlayer = 0;
+    10900:  935:    nextPlayer = 0;
         -:  936:  }
         -:  937:
         -:  938:  //uses switch to select card and perform actions
-    20100:  939:  switch (card)
-branch  0 taken 0%
+    30100:  939:  switch (card)
+branch  0 taken 33%
 branch  1 taken 0%
 branch  2 taken 0%
 branch  3 taken 0%
@@ -1491,7 +1463,7 @@ branch  6 taken 1%
 branch  7 taken 0%
 branch  8 taken 0%
 branch  9 taken 0%
-branch 10 taken 99%
+branch 10 taken 66%
 branch 11 taken 0%
 branch 12 taken 0%
 branch 13 taken 0%
@@ -1504,9 +1476,9 @@ branch 19 taken 0%
 branch 20 taken 0%
         -:  940:  {
         -:  941:  case adventurer:
-    #####:  942:    adventurerCard(drawntreasure, handPos, state, currentPlayer, z, temphand);
-call    0 never executed
-    #####:  943:    return 0;
+    10000:  942:    adventurerCard(drawntreasure, handPos, state, currentPlayer, z, temphand);
+call    0 returned 100%
+    10000:  943:    return 0;
         -:  944:
         -:  945:  case council_room:
         -:  946:    //+4 Cards
