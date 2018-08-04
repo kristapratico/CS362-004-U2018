@@ -9,7 +9,7 @@
 
 #define TESTCARD "smithy"
 #define DEBUG_PRINT 0
-#define NUM_TESTS 100
+#define NUM_TESTS 10000
 
 // num unqiue cards in this implementation of Dominion
 int UNIQUE_CARDS = 27;
