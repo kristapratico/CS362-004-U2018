@@ -22,14 +22,29 @@ public class UrlValidatorTest extends TestCase {
    public void testManualTest()
    {
 //You can use this function to implement your manual testing	   
+	   UrlValidator url = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
+	   System.out.println(url.isValid("http://www.neopets.com"));
    }
    
    
-   public void testYourFirstPartition()
+   public void testScheme()
    {
-	 //You can use this function to implement your First Partition testing	   
-
+	   String url = "www.neopets.com";
+	   UrlValidator testUrl = new UrlValidator();
+	   
+	   String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
+       String[] invalidScheme = {"3ht://", "http:/", "http:", "http/", "://"};
+       System.out.println("Partition Testing: Scheme");
+       System.out.println("Valid Schemes");
+       for (int x = 0; x < validScheme.length; x++) {
+    	   System.out.println(validScheme[x] + url + ": " + testUrl.isValid(validScheme[x] + url));
+       }
+       System.out.println("Invalid Schemes");
+       for (int x = 0; x < invalidScheme.length; x++) {
+    	   System.out.println(invalidScheme[x] + url + ": " + testUrl.isValid(invalidScheme[x] + url));
+       }
+       
    }
    
    public void testYourSecondPartition(){
