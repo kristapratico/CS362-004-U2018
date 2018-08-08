@@ -43,15 +43,24 @@ unittest4: unittest4.c dominion.o rngs.o
 
 cardtest1: cardtest1.c dominion.o rngs.o
 	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o interface.o $(CFLAGS)
+	./cardtest1 >> cardtest1.out
+	gcov -f -b dominion.c >> cardtest1.out
+	cat dominion.c.gcov >> cardtest1.out
 
 cardtest2: cardtest2.c dominion.o rngs.o
 	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o interface.o $(CFLAGS)
+	./cardtest2 >> cardtest2.out
+	gcov -f -b dominion.c >> cardtest2.out
+	cat dominion.c.gcov >> cardtest2.out
 
 cardtest3: cardtest3.c dominion.o rngs.o
 	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o interface.o $(CFLAGS)
 
 cardtest4: cardtest4.c dominion.o rngs.o
 	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)
+	./cardtest4 >> cardtest4.out
+	gcov -f -b dominion.c >> cardtest4.out
+	cat dominion.c.gcov >> cardtest4.out
 
 unittestresults: cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4
 	./unittest1 &> unittestresults.out
@@ -105,5 +114,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestcard1 randomtestcard1.exe randomtestcard1.out randomtestadventurer randomtestadventurer.exe randomtestadventurer.out randomtestcard2 randomtestcard2.exe randomtestcard2.out\
-	cardtest1 cardtest1.exe cardtest2 cardtest2.exe cardtest3 cardtest3.exe cardtest4 cardtest4.exe unittest1 unittest1.exe unittest2 unittest2.exe unittest3 unittest3.exe unittest4 unittest4.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe randomtestcard1 randomtestcard1.exe randomtestcard1.out randomtestadventurer randomtestadventurer.exe randomtestadventurer.out randomtestcard2 randomtestcard2.exe randomtestcard2.out cardtest1 cardtest1.exe cardtest2 cardtest2.exe cardtest3 cardtest3.exe cardtest4 cardtest4.exe unittest1 unittest1.exe unittest2 unittest2.exe unittest3 unittest3.exe unittest4 unittest4.exe

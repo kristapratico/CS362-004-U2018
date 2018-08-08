@@ -839,7 +839,7 @@ int villageEff(struct gameState *state, int handPos)
 {
 
   int currentPlayer = whoseTurn(state);
-  currentPlayer++; //ASSIGNMENT-2-BUG
+  //currentPlayer++; //ASSIGNMENT-2-BUG
 
   //person playing card does not get benefits of card
   //no wraparound for currentPlayer if currPlayer >= numPlayers
