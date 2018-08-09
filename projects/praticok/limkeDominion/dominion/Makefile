@@ -55,6 +55,9 @@ cardtest2: cardtest2.c dominion.o rngs.o
 
 cardtest3: cardtest3.c dominion.o rngs.o
 	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o interface.o $(CFLAGS)
+	./cardtest3 >> cardtest3.out
+	gcov -f -b dominion.c >> cardtest3.out
+	cat dominion.c.gcov >> cardtest3.out
 
 cardtest4: cardtest4.c dominion.o rngs.o
 	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)
