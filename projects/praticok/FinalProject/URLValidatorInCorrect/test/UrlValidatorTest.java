@@ -29,7 +29,7 @@ public class UrlValidatorTest extends TestCase {
    
    public void testScheme()
    {
-	   String url = "www.neopets.com";
+	   String url = "www.google.com";
 	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
 	   String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
