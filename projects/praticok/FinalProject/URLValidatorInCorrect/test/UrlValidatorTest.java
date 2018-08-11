@@ -32,7 +32,7 @@ public class UrlValidatorTest extends TestCase {
 	   String url = "www.google.com";
 	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
+       String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
        String[] invalidScheme = {"3ht://", "http:/", "http:", "http/", "://"};
        System.out.println("\n" + "Partition Testing: Scheme");
        System.out.println("\n" + "Valid Schemes");
@@ -52,7 +52,7 @@ public class UrlValidatorTest extends TestCase {
 	   String url = "http://";
 	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   String[] validAuth = {"www.google.com", "www.neopets.com", "0.0.0.0", "256.255.255.256", "www.amazon.com", "go.com"};
+       String[] validAuth = {"www.google.com", "www.neopets.com", "0.0.0.0", "256.255.255.256", "www.amazon.com", "go.com"};
        String[] invalidAuth = {"zyx", ".1.2.3", "go.b", "yyy.", ""};
        System.out.println("\n" + "Partition Testing: Authority");
        System.out.println("\n" + "Valid Authoritys");
@@ -72,7 +72,7 @@ public class UrlValidatorTest extends TestCase {
 	   String url = "http://www.google.com";
 	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   String[] validPort = {":80", ":900", ":483", ":65535", ":0", ""};
+       String[] validPort = {":80", ":900", ":483", ":65535", ":0", ""};
        String[] invalidPort = {":-2", ":9a", ":70000", ":-54a"};
        System.out.println("\n" + "Partition Testing: Port");
        System.out.println("\n" + "Valid Ports");
@@ -93,7 +93,7 @@ public class UrlValidatorTest extends TestCase {
 	   String url = "http://www.google.com";
 	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   String[] validPath = {"/path", "/test123", "/test/file", "/path/"};
+       String[] validPath = {"/path", "/test123", "/test/file", "/path/"};
        String[] invalidPath = {"/.../", "//test//", "/.-./", "/test..//"};
        System.out.println("\n" + "Partition Testing: Path");
        System.out.println("\n" + "Valid Paths");
@@ -114,7 +114,7 @@ public class UrlValidatorTest extends TestCase {
 	   String url = "http://www.google.com";
 	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   String[] validQuery = {"?action=view", "?action=edit&mode=up", ""};
+       String[] validQuery = {"?action=view", "?action=edit&mode=up", ""};
        String[] invalidQuery = {"@action=view", "@action=edit&mode=up"};
        System.out.println("\n" + "Partition Testing: Query");
        System.out.println("\n" + "Valid Queries");
