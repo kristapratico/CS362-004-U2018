@@ -21,10 +21,9 @@ public class UrlValidatorTest extends TestCase {
    public void testManualTest()
    {
    
-	   UrlValidator url = new UrlValidator();
+	   UrlValidator url = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   assertTrue(url.isValid("http://www.neopets.com"));
-	   System.out.println(url.isValid("http://"));
+	   assertTrue(url.isValid("http://www.google.com@action=view"));
    }
    
    
@@ -35,18 +34,15 @@ public class UrlValidatorTest extends TestCase {
 	   
 	   String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
        String[] invalidScheme = {"3ht://", "http:/", "http:", "http/", "://"};
-       System.out.println("Partition Testing: Scheme");
+       System.out.println("\n" + "Partition Testing: Scheme");
        System.out.println("\n" + "Valid Schemes");
        for (int x = 0; x < validScheme.length; x++) {
-    	   System.out.println(validScheme[x] + url + ": " + testUrl.isValid(validScheme[x] + url));
-    	   //assertEquals(true, testUrl.isValid(validScheme[x] + url));
-
+    	   System.out.println(validScheme[x] + url + " : " + testUrl.isValid(validScheme[x] + url));
        }
        
        System.out.println("\n" + "Invalid Schemes");
        for (int x = 0; x < invalidScheme.length; x++) {
-    	   System.out.println(invalidScheme[x] + url + ": " + testUrl.isValid(invalidScheme[x] + url));
-    	   //assertEquals(true, testUrl.isValid(invalidScheme[x] + url));
+    	   System.out.println(invalidScheme[x] + url + " : " + testUrl.isValid(invalidScheme[x] + url));
        }
        
    }
@@ -61,19 +57,79 @@ public class UrlValidatorTest extends TestCase {
        System.out.println("\n" + "Partition Testing: Authority");
        System.out.println("\n" + "Valid Authoritys");
        for (int x = 0; x < validAuth.length; x++) {
-    	   System.out.println(url + validAuth[x] + ": " + testUrl.isValid(url + validAuth[x]));
-    	   //assertEquals(true, testUrl.isValid(validAuth[x] + url));
-
+    	   System.out.println(url + validAuth[x] + " : " + testUrl.isValid(url + validAuth[x]));
        }
        
        System.out.println("\n" + "Invalid Authoritys");
        for (int x = 0; x < invalidAuth.length; x++) {
-    	   System.out.println(url + invalidAuth[x] + ": " + testUrl.isValid(url + invalidAuth[x]));
-    	   //assertEquals(true, testUrl.isValid(invalidAuth[x] + url));
+    	   System.out.println(url + invalidAuth[x] + " : " + testUrl.isValid(url + invalidAuth[x]));
        }
 
    }
-   //You need to create more test cases for your Partitions if you need to 
+
+   public void testPort()
+   {
+	   String url = "http://www.google.com";
+	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String[] validPort = {":80", ":900", ":483", ":65535", ":0", ""};
+       String[] invalidPort = {":-2", ":9a", ":70000", ":-54a"};
+       System.out.println("\n" + "Partition Testing: Port");
+       System.out.println("\n" + "Valid Ports");
+       for (int x = 0; x < validPort.length; x++) {
+    	   System.out.println(url + validPort[x] + " : " + testUrl.isValid(url + validPort[x]));
+
+       }
+       
+       System.out.println("\n" + "Invalid Ports");
+       for (int x = 0; x < invalidPort.length; x++) {
+    	   System.out.println(url + invalidPort[x] + " : " + testUrl.isValid(url + invalidPort[x]));
+       }
+       
+   }
+   
+   public void testPath()
+   {
+	   String url = "http://www.google.com";
+	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String[] validPath = {"/path", "/test123", "/test/file", "/path/"};
+       String[] invalidPath = {"/.../", "//test//", "/.-./", "/test..//"};
+       System.out.println("\n" + "Partition Testing: Path");
+       System.out.println("\n" + "Valid Paths");
+       for (int x = 0; x < validPath.length; x++) {
+    	   System.out.println(url + validPath[x] + " : " + testUrl.isValid(url + validPath[x]));
+
+       }
+       
+       System.out.println("\n" + "Invalid Paths");
+       for (int x = 0; x < invalidPath.length; x++) {
+    	   System.out.println(url + invalidPath[x] + " : " + testUrl.isValid(url + invalidPath[x]));
+       }
+       
+   }
+   
+   public void testQuery()
+   {
+	   String url = "http://www.google.com";
+	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+	   
+	   String[] validQuery = {"?action=view", "?action=edit&mode=up", ""};
+       String[] invalidQuery = {"@action=view", "@action=edit&mode=up"};
+       System.out.println("\n" + "Partition Testing: Query");
+       System.out.println("\n" + "Valid Queries");
+       for (int x = 0; x < validQuery.length; x++) {
+    	   System.out.println(url + validQuery[x] + " : " + testUrl.isValid(url + validQuery[x]));
+
+       }
+       
+       System.out.println("\n" + "Invalid Queries");
+       for (int x = 0; x < invalidQuery.length; x++) {
+    	   System.out.println(url + invalidQuery[x] + " : " + testUrl.isValid(url + invalidQuery[x]));
+       }
+       
+   }
+   
    
    public void testIsValid()
    {
