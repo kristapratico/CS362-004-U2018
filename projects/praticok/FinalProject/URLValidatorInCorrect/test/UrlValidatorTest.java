@@ -23,7 +23,7 @@ public class UrlValidatorTest extends TestCase {
    
 	   UrlValidator url = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
-	   assertTrue(url.isValid("http://www.google.com@action=view"));
+	   assertTrue(url.isValid("http://www.google.com"));
    }
    
    
