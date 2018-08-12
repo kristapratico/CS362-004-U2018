@@ -31,15 +31,27 @@ runtests: testDrawCard
 
 unittest1: unittest1.c dominion.o rngs.o
 	gcc -o unittest1 -g unittest1.c dominion.o rngs.o interface.o $(CFLAGS)
+	./unittest1 >> unittest1.out
+	gcov -f -b dominion.c >> unittest1.out
+	cat dominion.c.gcov >> unittest1.out
 
 unittest2: unittest2.c dominion.o rngs.o
 	gcc -o unittest2 -g unittest2.c dominion.o rngs.o interface.o $(CFLAGS)
+	./unittest2 >> unittest2.out
+	gcov -f -b dominion.c >> unittest2.out
+	cat dominion.c.gcov >> unittest2.out
 
 unittest3: unittest3.c dominion.o rngs.o
 	gcc -o unittest3 -g unittest3.c dominion.o rngs.o interface.o $(CFLAGS)
+	./unittest3 >> unittest3.out
+	gcov -f -b dominion.c >> unittest3.out
+	cat dominion.c.gcov >> unittest3.out
 
 unittest4: unittest4.c dominion.o rngs.o
 	gcc -o unittest4 -g unittest4.c dominion.o rngs.o interface.o $(CFLAGS)
+	./unittest4 >> unittest4.out
+	gcov -f -b dominion.c >> unittest4.out
+	cat dominion.c.gcov >> unittest4.out
 
 cardtest1: cardtest1.c dominion.o rngs.o
 	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o interface.o $(CFLAGS)
