@@ -14,10 +14,6 @@ public class UrlValidatorTest extends TestCase {
 
    public void testManualTest()
    {
-   
-	 //UrlValidator url = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
-	 //assertTrue(url.isValid("http://google.com/test/file"));
-
      //instantiate urlValidator with constructor
      //UrlValidator urlVal = new UrlValidator();
      UrlValidator urlVal = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
@@ -37,6 +33,8 @@ public class UrlValidatorTest extends TestCase {
      System.out.println(urlVal.isValid("https://osu-cs.slack.com/"));
      System.out.println(urlVal.isValid(""));
      System.out.println(urlVal.isValid("ftp://foo.bar.com/"));
+     System.out.println(urlVal.isValid("http://www.google.com/"));
+     System.out.println(urlVal.isValid("http://www.amazon.com/"));
      
      //notice that both true and false URLs output false
      //different constructor lead to different outputs
@@ -44,11 +42,11 @@ public class UrlValidatorTest extends TestCase {
 	   
    }
    
-   
+   // TEST PARTITION: SCHEME
    public void testScheme()
    {
-	   String url = "www.google.com";
-	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+       String url = "www.google.com";
+       UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
        String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
        String[] invalidScheme = {"3ht://", "http:/", "http:", "http/", "://"};
@@ -62,13 +60,13 @@ public class UrlValidatorTest extends TestCase {
        for (int x = 0; x < invalidScheme.length; x++) {
     	   System.out.println(invalidScheme[x] + url + " : " + testUrl.isValid(invalidScheme[x] + url));
        }
-       
    }
    
+   // TEST PARTITION: AUTHORITY
    public void testAuthority()
    {
-	   String url = "http://";
-	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+       String url = "http://";
+       UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
        String[] validAuth = {"www.google.com", "www.neopets.com", "0.0.0.0", "256.255.255.256", "www.amazon.com", "go.com"};
        String[] invalidAuth = {"zyx", ".1.2.3", "go.b", "yyy.", ""};
@@ -82,13 +80,13 @@ public class UrlValidatorTest extends TestCase {
        for (int x = 0; x < invalidAuth.length; x++) {
     	   System.out.println(url + invalidAuth[x] + " : " + testUrl.isValid(url + invalidAuth[x]));
        }
-
    }
-
+   
+   // TEST PARTITION: PORT
    public void testPort()
    {
-	   String url = "http://www.google.com";
-	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+       String url = "http://www.google.com";
+       UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
        String[] validPort = {":80", ":900", ":483", ":65535", ":0", ""};
        String[] invalidPort = {":-2", ":9a", ":70000", ":-54a"};
@@ -96,20 +94,19 @@ public class UrlValidatorTest extends TestCase {
        System.out.println("\n" + "Valid Ports");
        for (int x = 0; x < validPort.length; x++) {
     	   System.out.println(url + validPort[x] + " : " + testUrl.isValid(url + validPort[x]));
-
        }
        
        System.out.println("\n" + "Invalid Ports");
        for (int x = 0; x < invalidPort.length; x++) {
     	   System.out.println(url + invalidPort[x] + " : " + testUrl.isValid(url + invalidPort[x]));
        }
-       
    }
-   
+
+   // TEST PARTITION: PATH
    public void testPath()
    {
-	   String url = "http://www.google.com";
-	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+       String url = "http://www.google.com";
+       UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
 	   
        String[] validPath = {"/path", "/test123", "/test/file", "/path/"};
        String[] invalidPath = {"/.../", "//test//", "/.-./", "/test..//"};
@@ -117,7 +114,6 @@ public class UrlValidatorTest extends TestCase {
        System.out.println("\n" + "Valid Paths");
        for (int x = 0; x < validPath.length; x++) {
     	   System.out.println(url + validPath[x] + " : " + testUrl.isValid(url + validPath[x]));
-
        }
        
        System.out.println("\n" + "Invalid Paths");
@@ -127,32 +123,31 @@ public class UrlValidatorTest extends TestCase {
        
    }
    
+   // TEST PARTITION: QUERY
    public void testQuery()
    {
-	   String url = "http://www.google.com";
-	   UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
-	   
+       String url = "http://www.google.com";
+       UrlValidator testUrl = new UrlValidator(UrlValidator.ALLOW_ALL_SCHEMES);
+	  
        String[] validQuery = {"?action=view", "?action=edit&mode=up", ""};
        String[] invalidQuery = {"@action=view", "!action=edit&mode=up"};
        System.out.println("\n" + "Partition Testing: Query");
        System.out.println("\n" + "Valid Queries");
        for (int x = 0; x < validQuery.length; x++) {
     	   System.out.println(url + validQuery[x] + " : " + testUrl.isValid(url + validQuery[x]));
-
        }
        
        System.out.println("\n" + "Invalid Queries");
        for (int x = 0; x < invalidQuery.length; x++) {
     	   System.out.println(url + invalidQuery[x] + " : " + testUrl.isValid(url + invalidQuery[x]));
        }
-       
    }
    
    
    public void testIsValid()
    {
 	   //You can use this function for programming based testing
-	   String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
+       String[] validScheme = {"http://", "ftp://", "h3t://", "https://", "ftp://", ""};
        String[] invalidScheme = {"3ht://", "http:/", "http:", "http/", "://"};
        String[] validAuth = {"www.google.com", "www.neopets.com", "0.0.0.0", "256.255.255.256", "www.amazon.com", "go.com"};
        String[] invalidAuth = {"zyx", ".1.2.3", "go.b", "yyy.", ""};
@@ -232,6 +227,5 @@ public class UrlValidatorTest extends TestCase {
                }
            }
        }
-   }
-   
+   }  
 }
